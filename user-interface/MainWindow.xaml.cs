@@ -24,7 +24,8 @@ namespace user_interface
 		public MainWindow()
 		{
 			InitializeComponent();
-			MessageBox.Show(Class1.f().ToString());
+			SDE sde = new SDE(1, 2, 3, 4, 1, 2);
+			double[,] solution = sde.getSolution;
 		}
 	}
 }
