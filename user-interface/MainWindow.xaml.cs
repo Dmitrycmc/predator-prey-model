@@ -27,24 +27,40 @@ namespace user_interface
 		public MainWindow()
 		{
 			InitializeComponent();
-			SDEPP sde = new SDEPP(1, 1, 5, 4, 1, 1);
-			double[,] solution = sde.getSolution;
+			SDEPP sde = new SDEPP(1, 1, 1, 1, 1, 2);
+			sde.OSLO();
+			double[,] solution1 = sde.getSolution;
+			sde.Projection();
+			double[,] solution2 = sde.getSolution;
 
-			List<ObservablePoint> op = new List<ObservablePoint>();
+			List<ObservablePoint> op1 = new List<ObservablePoint>();
 
-			for (int i = 0; i < solution.GetLength(0); i++)
+			for (int i = 0; i < solution1.GetLength(0); i++)
 			{
-				op.Add(new ObservablePoint(solution[i,1],solution[i,2]));
+				op1.Add(new ObservablePoint(solution1[i, 1], solution1[i, 2]));
+			}
 
-				//if (i == 0) MessageBox.Show((y + x - Math.Log(x) - Math.Log(y)).ToString());
+			List<ObservablePoint> op2 = new List<ObservablePoint>();
+
+			for (int i = 0; i < solution1.GetLength(0); i++)
+			{
+				op2.Add(new ObservablePoint(solution2[i, 1], solution2[i, 2]));
 			}
 
 			plot.SeriesCollection.Add(new LineSeries
-					{
-						Title = "Real line",
-						PointGeometrySize = 0,
-						Values = new ChartValues<ObservablePoint>(op),
-					});
+				{
+					Title = "PROJECT",
+					PointGeometrySize = 0,
+					Values = new ChartValues<ObservablePoint>(op2),
+				}
+			);
+			plot.SeriesCollection.Add(new LineSeries
+				{
+					Title = "OSLO",
+					PointGeometrySize = 0,
+					Values = new ChartValues<ObservablePoint>(op1),
+				}
+			);
 		}
 	}
 }
