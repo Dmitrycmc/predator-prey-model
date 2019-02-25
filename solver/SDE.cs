@@ -7,7 +7,7 @@ using Microsoft.Research.Oslo;
 
 namespace Solver
 {
-	public class SDE
+	public class SDEPP
 	{
 		public readonly double alpha, beta, gamma, delta, x0, y0;
 
@@ -21,7 +21,7 @@ namespace Solver
 		}
 
 
-		public SDE(double alpha, double beta, double gamma, double delta, double x0, double y0)
+		public SDEPP(double alpha, double beta, double gamma, double delta, double x0, double y0)
 		{
 			this.alpha = alpha;
 			this.beta = beta;
