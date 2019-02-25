@@ -1,12 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 using LiveCharts;
+using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 
 namespace Wpf.CartesianChart.PointShapeLine
 {
-	public partial class PointShapeLine : UserControl
+	public static class Utils {
+		public static List<ObservablePoint> getPhasePathPoints (List<double[]> src) {
+			var result = new List<ObservablePoint>();
+			src.ForEach(points => {
+				result.Add(new ObservablePoint(points[0], points[1]));
+			});
+			return result;
+		}
+	}
+
+public partial class PointShapeLine : UserControl
 	{
 		public PointShapeLine()
 		{

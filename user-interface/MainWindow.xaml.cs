@@ -16,6 +16,7 @@ using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using Solver;
+using Wpf.CartesianChart.PointShapeLine;
 
 namespace user_interface
 {
@@ -27,38 +28,28 @@ namespace user_interface
 		public MainWindow()
 		{
 			InitializeComponent();
-			SDEPP sde = new SDEPP(1, 1, 1, 1, 1, 2);
-			sde.OSLO();
-			double[,] solution1 = sde.getSolution;
-			sde.Projection();
-			double[,] solution2 = sde.getSolution;
 
-			List<ObservablePoint> op1 = new List<ObservablePoint>();
+			var sde = new Model(1, 2, 3, 5, 1, 2);
+			const double dt = 0.01;
 
-			for (int i = 0; i < solution1.GetLength(0); i++)
-			{
-				op1.Add(new ObservablePoint(solution1[i, 1], solution1[i, 2]));
-			}
-
-			List<ObservablePoint> op2 = new List<ObservablePoint>();
-
-			for (int i = 0; i < solution1.GetLength(0); i++)
-			{
-				op2.Add(new ObservablePoint(solution2[i, 1], solution2[i, 2]));
-			}
-
-			plot.SeriesCollection.Add(new LineSeries
-				{
-					Title = "PROJECT",
-					PointGeometrySize = 0,
-					Values = new ChartValues<ObservablePoint>(op2),
-				}
-			);
+			//sde.OSLO(dt);
+			var SolutionOSLO = Utils.getPhasePathPoints(sde.getSolution);
 			plot.SeriesCollection.Add(new LineSeries
 				{
 					Title = "OSLO",
 					PointGeometrySize = 0,
-					Values = new ChartValues<ObservablePoint>(op1),
+					Values = new ChartValues<ObservablePoint>(SolutionOSLO),
+				}
+			);
+
+			sde.Projection(dt);
+			var SolutionProj = Utils.getPhasePathPoints(sde.getSolution);
+		
+			plot.SeriesCollection.Add(new LineSeries
+				{
+					Title = "Projection",
+					PointGeometrySize = 0,
+					Values = new ChartValues<ObservablePoint>(SolutionProj),
 				}
 			);
 		}
