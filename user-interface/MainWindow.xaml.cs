@@ -35,6 +35,8 @@ namespace user_interface
 			for (int i = 0; i < solution.GetLength(0); i++)
 			{
 				op.Add(new ObservablePoint(solution[i,1],solution[i,2]));
+
+				//if (i == 0) MessageBox.Show((y + x - Math.Log(x) - Math.Log(y)).ToString());
 			}
 
 			plot.SeriesCollection.Add(new LineSeries
