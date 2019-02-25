@@ -38,7 +38,7 @@ namespace Solver
 					-x[1] + x[0] * x[1]
 				)
 			);
-			var points = sol.SolveFromToStep(0, 20, 1).ToArray();
+			var points = sol.SolveFromToStep(0, 200, 0.1).ToArray();
 			int len = points.Length;
 			int i = 0;
 			solution = new double[len, 3];
