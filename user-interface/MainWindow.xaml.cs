@@ -24,7 +24,7 @@ namespace user_interface
 		public MainWindow()
 		{
 			InitializeComponent();
-			SDE sde = new SDE(1, 2, 3, 4, 1, 2);
+			SDEPP sde = new SDEPP(1, 2, 3, 4, 1, 2);
 			double[,] solution = sde.getSolution;
 		}
 	}

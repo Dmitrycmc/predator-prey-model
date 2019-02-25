@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Research.Oslo;
 
 namespace Solver
 {
@@ -32,7 +33,22 @@ namespace Solver
 
 		private void Solve()
 		{
-			solution = new double[,] { { 1, 2 }, { 3, 4 } };
+			var sol = Ode.RK547M(0, new Vector(5.0, 1.0), (t, x) => new Vector(
+					x[0] - x[0] * x[1],
+					-x[1] + x[0] * x[1]
+				)
+			);
+			var points = sol.SolveFromToStep(0, 20, 1).ToArray();
+			int len = points.Length;
+			int i = 0;
+			solution = new double[len, 3];
+			foreach (var sp in points)
+			{
+				solution[i, 0] = sp.T;
+				solution[i, 1] = sp.X[0];
+				solution[i, 2] = sp.X[1];
+				i++;
+			}
 		}
 	}
 }
