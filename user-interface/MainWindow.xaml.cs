@@ -28,30 +28,36 @@ namespace user_interface
 		public MainWindow()
 		{
 			InitializeComponent();
+		}
 
-			var sde = new Model(1, 2, 3, 5, 1, 2);
-			const double dt = 0.01;
+		private void Button_solve_Click(object sender, RoutedEventArgs e)
+		{
 
-			//sde.OSLO(dt);
+
+			var sde = new Model(1, 1, 3, 5, 1, 2);
+			const double dt = 0.1;
+
+			sde.OSLO(dt);
 			var SolutionOSLO = Utils.getPhasePathPoints(sde.getSolution);
 			plot.SeriesCollection.Add(new LineSeries
-				{
-					Title = "OSLO",
-					PointGeometrySize = 0,
-					Values = new ChartValues<ObservablePoint>(SolutionOSLO),
-				}
+			{
+				Title = "OSLO",
+				PointGeometrySize = 0,
+				Values = new ChartValues<ObservablePoint>(SolutionOSLO),
+			}
 			);
 
 			sde.Projection(dt);
 			var SolutionProj = Utils.getPhasePathPoints(sde.getSolution);
-		
+
 			plot.SeriesCollection.Add(new LineSeries
-				{
-					Title = "Projection",
-					PointGeometrySize = 0,
-					Values = new ChartValues<ObservablePoint>(SolutionProj),
-				}
+			{
+				Title = "Projection",
+				//PointGeometrySize = 0,
+				Values = new ChartValues<ObservablePoint>(SolutionProj),
+			}
 			);
+
 		}
 	}
 }
