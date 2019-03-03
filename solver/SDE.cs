@@ -16,7 +16,7 @@ namespace Solver
 		public List<double[]> getSolution
 		{
 			get {
-				if (solution == null) new Exception("not solved");
+				if (solution == null) throw new Exception("Not solved");
 				return solution;
 			}
 		}
@@ -76,6 +76,20 @@ namespace Solver
 			}
 		}
 
+		public double[] getEquilibriumPoint()
+		{
+			return new double[2] { gamma / beta, alpha / beta };
+		}
+
+		public void Rays(double step)
+		{
+			double[] equilibriumPoint = getEquilibriumPoint();
+			double x0 = equilibriumPoint[0];
+			double y0 = equilibriumPoint[1];
+
+
+
+		}
 
 		public void OSLO(double step)
 		{
