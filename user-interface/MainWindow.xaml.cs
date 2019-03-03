@@ -40,22 +40,22 @@ namespace user_interface
 			sde.OSLO(dt);
 			var SolutionOSLO = Utils.getPhasePathPoints(sde.getSolution);
 			plot.SeriesCollection.Add(new LineSeries
-			{
-				Title = "OSLO",
-				PointGeometrySize = 0,
-				Values = new ChartValues<ObservablePoint>(SolutionOSLO),
-			}
+				{
+					Title = "OSLO",
+					PointGeometrySize = 0,
+					Values = new ChartValues<ObservablePoint>(SolutionOSLO),
+				}
 			);
 
-			sde.Projection(dt);
-			var SolutionProj = Utils.getPhasePathPoints(sde.getSolution);
+			sde.Rays(dt);
+			var SolutionRays = Utils.getPhasePathPoints(sde.getSolution);
 
 			plot.SeriesCollection.Add(new LineSeries
-			{
-				Title = "Projection",
-				//PointGeometrySize = 0,
-				Values = new ChartValues<ObservablePoint>(SolutionProj),
-			}
+				{
+					Title = "Rays",
+					PointGeometrySize = 0,
+					Values = new ChartValues<ObservablePoint>(SolutionRays),
+				}
 			);
 
 		}
