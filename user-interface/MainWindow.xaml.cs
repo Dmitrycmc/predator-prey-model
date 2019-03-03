@@ -38,6 +38,7 @@ namespace user_interface
 			const double dt = 0.1;
 
 			sde.OSLO(dt);
+			MessageBox.Show(sde.GetAverageSquaredError().ToString());
 			var SolutionOSLO = Utils.getPhasePathPoints(sde.getSolution);
 			plot.SeriesCollection.Add(new LineSeries
 				{
@@ -48,6 +49,7 @@ namespace user_interface
 			);
 
 			sde.Rays(dt);
+			MessageBox.Show(sde.GetAverageSquaredError().ToString());
 			var SolutionRays = Utils.getPhasePathPoints(sde.getSolution);
 
 			plot.SeriesCollection.Add(new LineSeries

@@ -125,5 +125,20 @@ namespace Solver
 				solution.Add(new double[] { sp.X[0], sp.X[1], sp.T });
 			}
 		}
+
+		public double GetAverageSquaredError()
+		{
+			double C0 = CalcC(x0, y0);
+			double sum = 0;
+			foreach (var p in solution)
+			{
+				double x = p[0];
+				double y = p[1];
+				double C = CalcC(x, y);
+				sum += Math.Pow(C - C0, 2);
+			}
+			sum /= solution.Count;
+			return Math.Sqrt(sum);
+		}
 	}
 }
