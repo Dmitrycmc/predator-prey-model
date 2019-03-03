@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Solver
 {
@@ -14,28 +9,24 @@ namespace Solver
 		internal static double BinSearch(Func<double, double> f, double a, double c, double eps)
 		{
 			double b = (a + c) / 2;
-			if (Math.Abs(c - a) < eps) return b;
-			if (f(b) > 0)
-				return BinSearch(f, b, c, eps);
-			else
-				return BinSearch(f, a, b, eps);
+			if (Math.Abs(c - a) > eps)
+			{
+				return BinSearch(f, b, f(a) * f(b) < 0 ? a : c, eps);
+			} else
+			{
+				return b;
+			}
 		}
 
 		internal static double LogSearch(Func<double, double> f, double eps)
 		{
-			double step = initStep;
-			while (f(step) > 0)
+			double x = initStep;
+			while (f(0) * f(x) > 0)
 			{
-				step *= 2;
+				x *= 2;
 			}
-			return BinSearch(f, step / 2, step, eps);
+			return BinSearch(f, x / 2, x, eps);
 			/// [..|..|.....|xxxxxxxxxxx|
-		}
-
-		internal static double Search(Func<double, double> f, double eps)
-		{
-			if (f(0) > 0) return LogSearch(f, eps);
-			return -LogSearch(x => -f(-x), eps);
 		}
 	}
 }

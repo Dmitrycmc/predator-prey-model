@@ -10,17 +10,21 @@ namespace Solver
 {
 	public class Model
 	{
-		public readonly double alpha, beta, gamma, delta, x0, y0;
+		public readonly double alpha, beta, gamma, delta, x0, y0, xE, yE;
 
 		private List<double[]> solution = null;
 		public List<double[]> getSolution
 		{
 			get {
-				if (solution == null) new Exception("not solved");
+				if (solution == null) throw new Exception("Not solved");
 				return solution;
 			}
 		}
-
+		
+		private double[] GetEquilibriumPoint()
+		{
+			return new double[2] { gamma / delta, alpha / beta };
+		}
 
 		public Model(double alpha, double beta, double gamma, double delta, double x0, double y0)
 		{
@@ -30,6 +34,10 @@ namespace Solver
 			this.delta = delta;
 			this.x0 = x0;
 			this.y0 = y0;
+
+			double[] equilibriumPoint = GetEquilibriumPoint();
+			xE = equilibriumPoint[0];
+			yE = equilibriumPoint[1];
 		}
 
 		private double CalcC(double x, double y)
@@ -37,6 +45,7 @@ namespace Solver
 			return delta * x + beta * y - gamma * Math.Log(x) - alpha * Math.Log(y);
 		}
 
+		/*
 		public void Projection(double step)
 		{
 			double x = x0;
@@ -75,7 +84,27 @@ namespace Solver
 				solution.Add(new double[] { x, y });
 			}
 		}
+		*/
 
+		public void Rays(double step)
+		{
+			solution = new List<double[]>();
+			double eps = 0.001;
+			double C = CalcC(x0, y0);
+			Func<double, double, double>
+				X = (phi, t) => xE + t * Math.Cos(phi),
+				Y = (phi, t) => yE + t * Math.Sin(phi),
+			    F = (phi, t) => CalcC(X(phi, t), Y(phi, t)) - C;
+			
+			for (double phi = 0; phi < 2 * Math.PI; phi += step)
+			{
+				double t0 = Utils.LogSearch(t => F(phi, t), eps);
+				double x = X(phi, t0);
+				double y = Y(phi, t0);
+				solution.Add(new double[] { x, y });
+			}
+			solution.Add(solution[0]);
+		}
 
 		public void OSLO(double step)
 		{
@@ -92,10 +121,24 @@ namespace Solver
 			solution = new List<double[]>();
 			foreach (var sp in points)
 			{
-
-				Debug.WriteLine("CO = " + CalcC(sp.X[0], sp.X[1]).ToString());
+				//Debug.WriteLine("CO = " + CalcC(sp.X[0], sp.X[1]).ToString());
 				solution.Add(new double[] { sp.X[0], sp.X[1], sp.T });
 			}
+		}
+
+		public double GetAverageSquaredError()
+		{
+			double C0 = CalcC(x0, y0);
+			double sum = 0;
+			foreach (var p in solution)
+			{
+				double x = p[0];
+				double y = p[1];
+				double C = CalcC(x, y);
+				sum += Math.Pow(C - C0, 2);
+			}
+			sum /= solution.Count;
+			return Math.Sqrt(sum);
 		}
 	}
 }
