@@ -15,8 +15,8 @@ using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
-using Solver;
 using Wpf.CartesianChart.PointShapeLine;
+using Solver;
 
 namespace user_interface
 {
@@ -32,31 +32,34 @@ namespace user_interface
 
 		private void Button_solve_Click(object sender, RoutedEventArgs e)
 		{
-
-
 			var sde = new Model(1, 1, 3, 5, 1, 2);
 			const double dt = 0.1;
 
 			sde.OSLO(dt);
-			MessageBox.Show(sde.GetAverageSquaredError().ToString());
-			var SolutionOSLO = Utils.getPhasePathPoints(sde.getSolution);
+			MessageBox.Show("OSLO method squared error: " + sde.GetAverageSquaredError());
+			var distortedMeasurements = Measurer.Measurer.getMeasurements(sde.getSolution, 0, 100);
+			var SolutionOSLO = Utils.getPhasePathPoints(distortedMeasurements);
 			plot.SeriesCollection.Add(new LineSeries
 				{
 					Title = "OSLO",
 					PointGeometrySize = 0,
 					Values = new ChartValues<ObservablePoint>(SolutionOSLO),
+					Fill = Brushes.Transparent
 				}
 			);
 
 			sde.Rays(dt);
-			MessageBox.Show(sde.GetAverageSquaredError().ToString());
-			var SolutionRays = Utils.getPhasePathPoints(sde.getSolution);
+			MessageBox.Show("Rays method squared error: " + sde.GetAverageSquaredError());
+		    distortedMeasurements = Measurer.Measurer.getMeasurements(sde.getSolution, 0.1, 100);
+			var SolutionRays = Utils.getPhasePathPoints(distortedMeasurements);
 
 			plot.SeriesCollection.Add(new LineSeries
 				{
 					Title = "Rays",
-					PointGeometrySize = 0,
 					Values = new ChartValues<ObservablePoint>(SolutionRays),
+					PointGeometry = DefaultGeometries.Circle,
+					StrokeThickness = 2,
+					Fill = Brushes.Transparent
 				}
 			);
 
