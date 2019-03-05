@@ -91,14 +91,15 @@ namespace Solver
 			solution = new List<double[]>();
 			double eps = 0.001;
 			double C = CalcC(x0, y0);
+			double t0;
 			Func<double, double, double>
 				X = (phi, t) => xE + t * Math.Cos(phi),
 				Y = (phi, t) => yE + t * Math.Sin(phi),
 			    F = (phi, t) => CalcC(X(phi, t), Y(phi, t)) - C;
 			
-			for (double phi = 0; phi < 2 * Math.PI; phi += step)
+			for (double phi = 0; phi < 2 * Math.PI; phi += step / t0)
 			{
-				double t0 = Utils.LogSearch(t => F(phi, t), eps);
+				t0 = Utils.LogSearch(t => F(phi, t), eps);
 				double x = X(phi, t0);
 				double y = Y(phi, t0);
 				solution.Add(new double[] { x, y });
