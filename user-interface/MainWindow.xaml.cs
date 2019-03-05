@@ -19,39 +19,37 @@ namespace user_interface
 			InitializeComponent();
 		}
 
-		private void Button_solve_Click(object sender, RoutedEventArgs e)
+		public void demonstrate(bool myWay)
 		{
 			var sde = new Model(1, 1, 3, 5, 1, 2);
 			const double dt = 0.1;
+			string wayName;
 
-			sde.OSLO(dt);
-			MessageBox.Show("OSLO method squared error: " + sde.GetAverageSquaredError());
-			var distortedMeasurements = Noise.getMeasurements(sde.getSolution, 0, 100);
-			var SolutionOSLO = Utils.getPhasePathPoints(distortedMeasurements);
-			plot.SeriesCollection.Add(new LineSeries
-				{
-					Title = "OSLO",
-					PointGeometrySize = 0,
-					Values = new ChartValues<ObservablePoint>(SolutionOSLO),
-					Fill = Brushes.Transparent
-				}
-			);
+			if (myWay)
+			{
+				wayName = "Rays";
+				sde.Rays(dt);
+			} else
+			{
+				wayName = "OLSO";
+				sde.OSLO(dt);
+			}
+			MessageBox.Show(wayName + " squared error: " + sde.GetAverageSquaredError());
+			var exactSol = sde.getSolution;
+			var measurements = Noise.getMeasurements(exactSol, 0.05, 20);
+			plot.drawLine(wayName + " orig", sde.getSolution);
+			plot.drawPoints(wayName + "noised", measurements);
 
-			sde.Rays(dt);
-			MessageBox.Show("Rays method squared error: " + sde.GetAverageSquaredError());
-		    distortedMeasurements = Noise.getMeasurements(sde.getSolution, 0.01, 100);
-			var SolutionRays = Utils.getPhasePathPoints(distortedMeasurements);
+		}
 
-			plot.SeriesCollection.Add(new LineSeries
-				{
-					Title = "Rays",
-					Values = new ChartValues<ObservablePoint>(SolutionRays),
-					PointGeometry = DefaultGeometries.Circle,
-					StrokeThickness = 2,
-					Fill = Brushes.Transparent
-				}
-			);
+		private void Button_solve1_Click(object sender, RoutedEventArgs e)
+		{
+			demonstrate(true);
+		}
 
+		private void Button_solve2_Click(object sender, RoutedEventArgs e)
+		{
+			demonstrate(false);
 		}
 	}
 }
