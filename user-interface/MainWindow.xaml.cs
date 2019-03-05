@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using Wpf.CartesianChart.PointShapeLine;
 using Solver;
+using Measurer;
 
 namespace user_interface
 {
@@ -37,7 +26,7 @@ namespace user_interface
 
 			sde.OSLO(dt);
 			MessageBox.Show("OSLO method squared error: " + sde.GetAverageSquaredError());
-			var distortedMeasurements = Measurer.Measurer.getMeasurements(sde.getSolution, 0, 100);
+			var distortedMeasurements = Noise.getMeasurements(sde.getSolution, 0, 100);
 			var SolutionOSLO = Utils.getPhasePathPoints(distortedMeasurements);
 			plot.SeriesCollection.Add(new LineSeries
 				{
@@ -50,7 +39,7 @@ namespace user_interface
 
 			sde.Rays(dt);
 			MessageBox.Show("Rays method squared error: " + sde.GetAverageSquaredError());
-		    distortedMeasurements = Measurer.Measurer.getMeasurements(sde.getSolution, 0.1, 100);
+		    distortedMeasurements = Noise.getMeasurements(sde.getSolution, 0.1, 100);
 			var SolutionRays = Utils.getPhasePathPoints(distortedMeasurements);
 
 			plot.SeriesCollection.Add(new LineSeries

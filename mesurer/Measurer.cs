@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Measurer
 {
-    static public class Measurer
+    static public class Noise
 	{
 		// todo: improve seed
 		static Random rand = new Random(new DateTime().Millisecond);
