@@ -7,8 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "solver", "solver\solver.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "user-interface", "user-interface\user-interface.csproj", "{702B8A35-4BB9-4E96-B1C6-45151688B61E}"
 	ProjectSection(ProjectDependencies) = postProject
+		{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F} = {E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}
 		{F4D2D3F7-398A-4AE9-BA9A-412943BAC6D4} = {F4D2D3F7-398A-4AE9-BA9A-412943BAC6D4}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mesurer", "mesurer\mesurer.csproj", "{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +37,14 @@ Global
 		{702B8A35-4BB9-4E96-B1C6-45151688B61E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{702B8A35-4BB9-4E96-B1C6-45151688B61E}.Release|x86.ActiveCfg = Release|x86
 		{702B8A35-4BB9-4E96-B1C6-45151688B61E}.Release|x86.Build.0 = Release|x86
+		{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}.Debug|x86.Build.0 = Debug|Any CPU
+		{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}.Release|x86.ActiveCfg = Release|Any CPU
+		{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

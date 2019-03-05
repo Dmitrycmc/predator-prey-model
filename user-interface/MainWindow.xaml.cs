@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
-using Solver;
 using Wpf.CartesianChart.PointShapeLine;
+using Solver;
+using Measurer;
 
 namespace user_interface
 {
@@ -30,36 +19,37 @@ namespace user_interface
 			InitializeComponent();
 		}
 
-		private void Button_solve_Click(object sender, RoutedEventArgs e)
+		public void demonstrate(bool myWay)
 		{
-
-
 			var sde = new Model(1, 1, 3, 5, 1, 2);
 			const double dt = 0.1;
+			string wayName;
 
-			sde.OSLO(dt);
-			MessageBox.Show(sde.GetAverageSquaredError().ToString());
-			var SolutionOSLO = Utils.getPhasePathPoints(sde.getSolution);
-			plot.SeriesCollection.Add(new LineSeries
-				{
-					Title = "OSLO",
-					PointGeometrySize = 0,
-					Values = new ChartValues<ObservablePoint>(SolutionOSLO),
-				}
-			);
+			if (myWay)
+			{
+				wayName = "Rays";
+				sde.Rays(dt);
+			} else
+			{
+				wayName = "OLSO";
+				sde.OSLO(dt);
+			}
+			MessageBox.Show(wayName + " squared error: " + sde.GetAverageSquaredError());
+			var exactSol = sde.getSolution;
+			var measurements = Noise.getMeasurements(exactSol, 0.05, 20);
+			plot.drawLine(wayName + " orig", sde.getSolution);
+			plot.drawPoints(wayName + "noised", measurements);
 
-			sde.Rays(dt);
-			MessageBox.Show(sde.GetAverageSquaredError().ToString());
-			var SolutionRays = Utils.getPhasePathPoints(sde.getSolution);
+		}
 
-			plot.SeriesCollection.Add(new LineSeries
-				{
-					Title = "Rays",
-					PointGeometrySize = 0,
-					Values = new ChartValues<ObservablePoint>(SolutionRays),
-				}
-			);
+		private void Button_solve1_Click(object sender, RoutedEventArgs e)
+		{
+			demonstrate(true);
+		}
 
+		private void Button_solve2_Click(object sender, RoutedEventArgs e)
+		{
+			demonstrate(false);
 		}
 	}
 }

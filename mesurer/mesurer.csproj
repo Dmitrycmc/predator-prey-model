@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F4D2D3F7-398A-4AE9-BA9A-412943BAC6D4}</ProjectGuid>
+    <ProjectGuid>{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>solver</RootNamespace>
-    <AssemblyName>solver</AssemblyName>
+    <RootNamespace>mesurer</RootNamespace>
+    <AssemblyName>mesurer</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Research.Oslo">
-      <HintPath>oslo\Microsoft.Research.Oslo.dll</HintPath>
+    <Reference Include="Microsoft.ML.Probabilistic, Version=0.3.1810.501, Culture=neutral, PublicKeyToken=e4813102a62778da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.Probabilistic.0.3.1810.501\lib\netstandard2.0\Microsoft.ML.Probabilistic.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,9 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SDE.cs" />
+    <Compile Include="Measurer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
