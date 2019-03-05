@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.ML.Probabilistic.Math;
 
 namespace Measurer
 {
     static public class Noise
 	{
-		// todo: improve seed
-		static Random rand = new Random(new DateTime().Millisecond);
-
 		static public List<double[]> getMeasurements(List<double[]> accurateMeasurements, double variance, int n)
 		{
 			// todo: implement Gauss
@@ -15,8 +13,8 @@ namespace Measurer
 			List<double[]> res = new List<double[]>();
 			foreach (var point in accurateMeasurements)
 			{
-				double dx = variance * rand.Next(-10, 10) / 10;
-				double dy = variance * rand.Next(-10, 10) / 10;
+				double dx = Rand.Normal(0, variance);
+				double dy = Rand.Normal(0, variance);
 				res.Add(new double[] { point[0] + dx, point[1] + dy });
 			}
 			return res;

@@ -39,7 +39,7 @@ namespace user_interface
 
 			sde.Rays(dt);
 			MessageBox.Show("Rays method squared error: " + sde.GetAverageSquaredError());
-		    distortedMeasurements = Noise.getMeasurements(sde.getSolution, 0.1, 100);
+		    distortedMeasurements = Noise.getMeasurements(sde.getSolution, 0.01, 100);
 			var SolutionRays = Utils.getPhasePathPoints(distortedMeasurements);
 
 			plot.SeriesCollection.Add(new LineSeries

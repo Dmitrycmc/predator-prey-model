@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.ML.Probabilistic, Version=0.3.1810.501, Culture=neutral, PublicKeyToken=e4813102a62778da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.Probabilistic.0.3.1810.501\lib\netstandard2.0\Microsoft.ML.Probabilistic.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,6 +46,9 @@
   <ItemGroup>
     <Compile Include="Measurer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
