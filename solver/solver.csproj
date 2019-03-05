@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Research.Oslo">
-      <HintPath>..\oslo\Microsoft.Research.Oslo.dll</HintPath>
+      <HintPath>oslo\Microsoft.Research.Oslo.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
