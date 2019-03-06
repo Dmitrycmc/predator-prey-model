@@ -44,48 +44,7 @@ namespace Solver
 		{
 			return delta * x + beta * y - gamma * Math.Log(x) - alpha * Math.Log(y);
 		}
-
-		/*
-		public void Projection(double step)
-		{
-			double x = x0;
-			double y = y0;
-			
-			int N = 5;
-
-			solution = new List<double[]>();
-			solution.Add(new double[] { x, y });
-
-			double C = CalcC(x, y);
-			Debug.WriteLine("C!!! = " + C.ToString());
-
-			for (int i = 0; i < N; i++)
-			{
-				var grad = new Tuple<double, double>(delta - gamma / x, beta - alpha / y);
-
-				solution.Add(new double[] { x+grad.Item1, y+grad.Item2 });
-				var n = new Tuple<double, double>(-grad.Item2, grad.Item1);
-				var p = new Tuple<double, double>(x + step * n.Item1, y + step * n.Item2);
-				var anti = new Tuple<double, double>(gamma / p.Item1 - delta, alpha / p.Item2 - beta);
-				double f(double z) => 
-					delta * (p.Item1 + z * anti.Item1) 
-					+ beta * (p.Item2 + z * anti.Item2) 
-					- gamma * Math.Log(p.Item1 + z * anti.Item1) 
-					- alpha * Math.Log(p.Item2 + z * anti.Item2) 
-					- C;
-				Debug.WriteLine("0 = " + f(0).ToString());
-				Debug.WriteLine("-5 = " + f(-5).ToString());
-				double z0 = Utils.Search(f, 0.01);
-
-				x = p.Item1 + z0 * anti.Item1;
-				y = p.Item2 + z0 * anti.Item2;
-				Debug.WriteLine("CP = " + CalcC(x, y).ToString());
-				if (CalcC(x, y) < 6.1) x = solution[50][50];
-				solution.Add(new double[] { x, y });
-			}
-		}
-		*/
-
+		
 		public void Rays(double step)
 		{
 			solution = new List<double[]>();
@@ -122,7 +81,6 @@ namespace Solver
 			solution = new List<double[]>();
 			foreach (var sp in points)
 			{
-				//Debug.WriteLine("CO = " + CalcC(sp.X[0], sp.X[1]).ToString());
 				solution.Add(new double[] { sp.X[0], sp.X[1], sp.T });
 			}
 		}

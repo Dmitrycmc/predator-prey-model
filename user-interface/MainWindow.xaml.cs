@@ -23,6 +23,9 @@ namespace user_interface
 		{
 			var sde = new Model(1, 1, 3, 5, 1, 2);
 			const double dt = 0.1;
+			double stdDev = 0.05;
+			int n = 20;
+
 			string wayName;
 
 			if (myWay)
@@ -36,7 +39,7 @@ namespace user_interface
 			}
 			MessageBox.Show(wayName + " squared error: " + sde.GetAverageSquaredError());
 			var exactSol = sde.getSolution;
-			var measurements = Noise.getMeasurements(exactSol, 0.05, 20);
+			var measurements = Noise.getMeasurements(exactSol, stdDev, n);
 			plot.drawLine(wayName + " orig", sde.getSolution);
 			plot.drawPoints(wayName + "noised", measurements);
 

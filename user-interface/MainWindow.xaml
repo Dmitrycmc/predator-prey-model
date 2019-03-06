@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:user_interface"
         xmlns:controls="clr-namespace:Wpf.CartesianChart.PointShapeLine"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="342.004">
-    <Grid>
+        Title="MainWindow" Height="513.2" Width="918.004">
+    <Grid Margin="0,0,0,-19">
         <controls:PointShapeLine x:Name="plot" Margin="10,10,9.6,101"/>
-        <Button x:Name="button_solve1" Content="Button" HorizontalAlignment="Left" Margin="117,367,0,0" VerticalAlignment="Top" Width="75" Click="Button_solve1_Click"/>
-        <Button x:Name="button_solve2" Content="Button" HorizontalAlignment="Left" Margin="211,367,0,0" VerticalAlignment="Top" Width="75" Click="Button_solve2_Click"/>
+        <Button x:Name="button_solve1" Content="Button" Margin="10,436,827,29" Click="Button_solve1_Click"/>
+        <Button x:Name="button_solve2" Content="Button" HorizontalAlignment="Left" Margin="116,436,0,29" Width="75" Click="Button_solve2_Click"/>
     </Grid>
 </Window>

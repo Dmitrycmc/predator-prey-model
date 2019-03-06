@@ -11,7 +11,6 @@ namespace Measurer
 		{
 			if (from < to)
 			{
-				//throw new Exception("List < n");
 				to = from;
 			}
 			List<int> res = new List<int>();
@@ -43,10 +42,10 @@ namespace Measurer
 			return ChooseCombinationFromList(list, GetRandomCombination(list.Count, n));
 		}
 
-		static public List<double[]> getMeasurements(List<double[]> accurateMeasurements, double stdDev, int n)
+		static public List<double[]> getMeasurements(List<double[]> exactSol, double stdDev, int n)
 		{
 			List<double[]> res = new List<double[]>();
-			var randomMeasurements = getRandomElementsFromList(accurateMeasurements, n);
+			var randomMeasurements = getRandomElementsFromList(exactSol, n);
 
 			foreach (var point in randomMeasurements)
 			{

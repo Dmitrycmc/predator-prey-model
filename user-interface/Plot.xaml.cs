@@ -60,11 +60,7 @@ namespace Wpf.CartesianChart.PointShapeLine
 		{
 			InitializeComponent();
 
-			SeriesCollection = new SeriesCollection
-			{
-				
-			};
-			
+			SeriesCollection = new SeriesCollection { };
 			YFormatter = value => string.Format("{0:0.00}", value);
 			DataContext = this;
 		}
