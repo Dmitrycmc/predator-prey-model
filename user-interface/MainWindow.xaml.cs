@@ -24,7 +24,6 @@ namespace user_interface
 
 		public void demonstrate(bool myWay)
 		{
-
 			sde = Generator.getRandomSystem();
 			const double dt = 0.1;
 			double stdDev = 0.05;
@@ -41,12 +40,17 @@ namespace user_interface
 				wayName = "OLSO";
 				sde.OSLO(dt);
 			}
+			
 			//MessageBox.Show(wayName + " squared error: " + sde.GetAverageSquaredError());
+
 			var exactSol = sde.getSolution;
-			var measurements = Generator.getMeasurements(exactSol, stdDev, n);
 			plot.drawLine(wayName + " orig", sde.getSolution);
+
+			var measurements = Generator.getMeasurements(exactSol, stdDev, n);
 			plot.drawPoints(wayName + "noised", measurements);
 
+			var equilibriumPoint = sde.GetEquilibriumPoint();
+			plot.drawPoints("Equilibrium point", equilibriumPoint);
 		}
 
 		private void Button_solve1_Click(object sender, RoutedEventArgs e)

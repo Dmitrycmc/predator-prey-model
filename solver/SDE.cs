@@ -21,7 +21,7 @@ namespace Solver
 			}
 		}
 		
-		private double[] GetEquilibriumPoint()
+		public double[] GetEquilibriumPoint()
 		{
 			return new double[2] { gamma / delta, alpha / beta };
 		}
