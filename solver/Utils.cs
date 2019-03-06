@@ -1,32 +1,42 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Solver
 {
 	internal static class Utils
 	{
-		private static double initStep = 0.01;
+		private const double initStep = 1;
 
 		internal static double BinSearch(Func<double, double> f, double a, double c, double eps)
 		{
 			double b = (a + c) / 2;
 			if (Math.Abs(c - a) > eps)
 			{
-				return BinSearch(f, b, f(a) * f(b) < 0 ? a : c, eps);
+				return BinSearch(f, b, f(a) * f(b) <= 0 ? a : c, eps);
 			} else
 			{
 				return b;
 			}
 		}
 
-		internal static double LogSearch(Func<double, double> f, double eps)
+		internal static double LogSearch(Func<double, double> f, double eps, double x0 = 0)
 		{
-			double x = initStep;
-			while (f(0) * f(x) > 0)
+			double step = initStep;
+			double fa = f(x0);
+			double fc = f(x0 + step);
+
+			while (double.IsNaN(fc) || (fa * fc > 0))
 			{
-				x *= 2;
-			}
-			return BinSearch(f, x / 2, x, eps);
-			/// [..|..|.....|xxxxxxxxxxx|
+				if (double.IsNaN(fc))
+				{
+					step /= 2;
+				} else
+				{
+					return LogSearch(f, eps, step);
+				}
+				fc = f(x0 + step);
+			};
+			return BinSearch(f, x0, x0 + step, eps);
 		}
 	}
 }
