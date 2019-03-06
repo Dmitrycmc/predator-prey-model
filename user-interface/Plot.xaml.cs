@@ -36,6 +36,11 @@ namespace Wpf.CartesianChart.PointShapeLine
 			);
 		}
 
+		public void drawPoints(string title, double[] point, Geometry geometry = null)
+		{
+			drawPoints(title, new List<double[]>() { point }, geometry);
+		}
+
 		public void drawPoints(string title, List<double[]> values, Geometry geometry = null)
 		{
 			drawPoints(title, new ChartValues<ObservablePoint>(getPhasePathPoints(values)), geometry);

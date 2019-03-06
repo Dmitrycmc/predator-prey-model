@@ -5,7 +5,7 @@ using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using Wpf.CartesianChart.PointShapeLine;
 using Solver;
-using Measurer;
+using Randomizer;
 
 namespace user_interface
 {
@@ -14,15 +14,18 @@ namespace user_interface
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		SDE sde;
+
 		public MainWindow()
 		{
 			InitializeComponent();
+
 		}
 
 		public void demonstrate(bool myWay)
 		{
-			var sde = new Model(1, 1, 3, 5, 1, 2);
-			const double dt = 0.1;
+			sde = Generator.getRandomSystem();
+			const double dt = 0.01;
 			double stdDev = 0.05;
 			int n = 20;
 
@@ -37,12 +40,17 @@ namespace user_interface
 				wayName = "OLSO";
 				sde.OSLO(dt);
 			}
-			MessageBox.Show(wayName + " squared error: " + sde.GetAverageSquaredError());
+			
+			//MessageBox.Show(wayName + " squared error: " + sde.GetAverageSquaredError());
+
 			var exactSol = sde.getSolution;
-			var measurements = Noise.getMeasurements(exactSol, stdDev, n);
 			plot.drawLine(wayName + " orig", sde.getSolution);
+
+			var measurements = Generator.getMeasurements(exactSol, stdDev, n);
 			plot.drawPoints(wayName + "noised", measurements);
 
+			var equilibriumPoint = sde.GetEquilibriumPoint();
+			plot.drawPoints("Equilibrium point", equilibriumPoint);
 		}
 
 		private void Button_solve1_Click(object sender, RoutedEventArgs e)

@@ -1,11 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.ML.Probabilistic.Math;
+using Solver;
 
-namespace Measurer
+namespace Randomizer
 {
-    static public class Noise
+    static public class Generator
 	{
+		static public SDE getRandomSystem()
+		{
+			double minValue = 0.1;
+			double maxValue = 5;
+			double alpha = Rand.UniformBetween(minValue, maxValue);
+			double beta = Rand.UniformBetween(minValue, maxValue);
+			double gamma = Rand.UniformBetween(minValue, maxValue);
+			double delta = Rand.UniformBetween(minValue, maxValue);
+			double x0 = Rand.UniformBetween(minValue, maxValue);
+			double y0 = Rand.UniformBetween(minValue, maxValue);
+			
+			return new SDE(alpha, beta, gamma, delta, x0, y0);
+		}
+
 
 		static private List<int> GetRandomCombination(int from, int to)
 		{

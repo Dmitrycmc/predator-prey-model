@@ -7,8 +7,8 @@
     <ProjectGuid>{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>mesurer</RootNamespace>
-    <AssemblyName>mesurer</AssemblyName>
+    <RootNamespace>randomizer</RootNamespace>
+    <AssemblyName>randomizer</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -34,6 +34,9 @@
     <Reference Include="Microsoft.ML.Probabilistic, Version=0.3.1810.501, Culture=neutral, PublicKeyToken=e4813102a62778da, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ML.Probabilistic.0.3.1810.501\lib\netstandard2.0\Microsoft.ML.Probabilistic.dll</HintPath>
     </Reference>
+    <Reference Include="solver">
+      <HintPath>..\solver\bin\Debug\solver.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Measurer.cs" />
+    <Compile Include="Generator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

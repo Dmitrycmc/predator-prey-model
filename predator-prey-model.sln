@@ -11,7 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "user-interface", "user-inte
 		{F4D2D3F7-398A-4AE9-BA9A-412943BAC6D4} = {F4D2D3F7-398A-4AE9-BA9A-412943BAC6D4}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mesurer", "mesurer\mesurer.csproj", "{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "randomizer", "randomizer\randomizer.csproj", "{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F4D2D3F7-398A-4AE9-BA9A-412943BAC6D4} = {F4D2D3F7-398A-4AE9-BA9A-412943BAC6D4}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
