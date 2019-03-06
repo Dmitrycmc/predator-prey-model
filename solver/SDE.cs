@@ -8,7 +8,7 @@ using Microsoft.Research.Oslo;
 
 namespace Solver
 {
-	public class Model
+	public class SDE
 	{
 		public readonly double alpha, beta, gamma, delta, x0, y0, xE, yE;
 
@@ -26,7 +26,7 @@ namespace Solver
 			return new double[2] { gamma / delta, alpha / beta };
 		}
 
-		public Model(double alpha, double beta, double gamma, double delta, double x0, double y0)
+		public SDE(double alpha, double beta, double gamma, double delta, double x0, double y0)
 		{
 			this.alpha = alpha;
 			this.beta = beta;
