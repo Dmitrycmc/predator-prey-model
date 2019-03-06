@@ -6,9 +6,11 @@ namespace Solver
 	internal static class Utils
 	{
 		private const double initStep = 1;
+		private const double stepFactor = 100;
 
 		internal static double BinSearch(Func<double, double> f, double a, double c, double eps)
 		{
+			Debug.Write('-');
 			double b = (a + c) / 2;
 			if (Math.Abs(c - a) > eps)
 			{
@@ -19,9 +21,9 @@ namespace Solver
 			}
 		}
 
-		internal static double LogSearch(Func<double, double> f, double eps, double x0 = 0)
+		internal static double LogSearch(Func<double, double> f, double eps, double x0 = 0, double step = initStep)
 		{
-			double step = initStep;
+			Debug.Write('+');
 			double fa = f(x0);
 			double fc = f(x0 + step);
 
@@ -32,7 +34,7 @@ namespace Solver
 					step /= 2;
 				} else
 				{
-					return LogSearch(f, eps, step);
+					return LogSearch(f, eps, step, stepFactor * step);
 				}
 				fc = f(x0 + step);
 			};
