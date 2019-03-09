@@ -7,6 +7,7 @@ using Wpf.CartesianChart.PointShapeLine;
 using Solver;
 using Randomizer;
 using Predictor;
+using System;
 
 namespace user_interface
 {
@@ -23,7 +24,7 @@ namespace user_interface
 			sde = Generator.getRandomSystem();
 		}
 
-		public void demonstrate(bool myWay)
+		public void Demonstrate(bool myWay)
 		{
 			const double dt = 0.01;
 			double stdDev = 0.05;
@@ -40,27 +41,36 @@ namespace user_interface
 				wayName = "OLSO";
 				sde.OSLO(dt);
 			}
-			
+
 			//MessageBox.Show(wayName + " squared error: " + sde.GetAverageSquaredError());
+
+			var equilibriumPoint = sde.GetEquilibriumPoint();
+			plot.drawPoints("Equilibrium point", equilibriumPoint);
 
 			var exactSol = sde.getSolution;
 			plot.drawLine(wayName + " orig", sde.getSolution);
 
 			var measurements = Generator.getMeasurements(exactSol, stdDev, n);
 			plot.drawPoints(wayName + "noised", measurements);
-
-			var equilibriumPoint = sde.GetEquilibriumPoint();
-			plot.drawPoints("Equilibrium point", equilibriumPoint);
+			try
+			{
+				var a = Model.FirstIntegralInfer(measurements);
+				MessageBox.Show(a);
+			}
+			catch (Exception e)
+			{
+				MessageBox.Show(e.Message);
+			}
 		}
 
 		private void Button_solve1_Click(object sender, RoutedEventArgs e)
 		{
-			demonstrate(true);
+			Demonstrate(true);
 		}
 
 		private void Button_solve2_Click(object sender, RoutedEventArgs e)
 		{
-			demonstrate(false);
+			Demonstrate(false);
 		}
 	}
 }
