@@ -6,6 +6,7 @@ using LiveCharts.Wpf;
 using Wpf.CartesianChart.PointShapeLine;
 using Solver;
 using Randomizer;
+using Predictor;
 
 namespace user_interface
 {
@@ -24,7 +25,6 @@ namespace user_interface
 
 		public void demonstrate(bool myWay)
 		{
-			
 			const double dt = 0.01;
 			double stdDev = 0.05;
 			int n = 20;
