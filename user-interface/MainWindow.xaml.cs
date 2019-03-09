@@ -22,6 +22,7 @@ namespace user_interface
 		{
 			InitializeComponent();
 			sde = Generator.getRandomSystem();
+			Demonstrate(false);
 		}
 
 		public void Demonstrate(bool myWay)
