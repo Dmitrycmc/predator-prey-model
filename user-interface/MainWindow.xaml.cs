@@ -19,12 +19,12 @@ namespace user_interface
 		public MainWindow()
 		{
 			InitializeComponent();
-
+			sde = Generator.getRandomSystem();
 		}
 
 		public void demonstrate(bool myWay)
 		{
-			sde = Generator.getRandomSystem();
+			
 			const double dt = 0.01;
 			double stdDev = 0.05;
 			int n = 20;

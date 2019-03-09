@@ -79,9 +79,25 @@ namespace Solver
 			var points = sol.SolveFromToStep(0, T, step).ToArray();
 
 			solution = new List<double[]>();
-			foreach (var sp in points)
+			double[] p0 = new double[2] { points[0].X[0], points[0].X[1] };
+			double[] p1 = new double[2] { points[1].X[0], points[1].X[1] };
+			double d0 = Utils.Distance(p0, p1);
+
+			solution.Add(new double[] { points[0].X[0], points[0].X[1], points[0].T });
+			solution.Add(new double[] { points[1].X[0], points[1].X[1], points[1].T });
+
+			for (int i = 2; i < points.Count(); i++)
 			{
-				solution.Add(new double[] { sp.X[0], sp.X[1], sp.T });
+				double d = Utils.Distance(p0, new double[2] { points[i].X[0], points[i].X[1] });
+				Debug.WriteLine(d0.ToString() + " " + d.ToString());
+				if (d > d0)
+				{
+					solution.Add(new double[] { points[i].X[0], points[i].X[1], points[i].T });
+				} else
+				{
+					solution.Add(new double[] { points[0].X[0], points[0].X[1], points[0].T });
+					break;
+				}
 			}
 		}
 

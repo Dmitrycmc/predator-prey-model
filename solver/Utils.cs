@@ -40,5 +40,13 @@ namespace Solver
 			};
 			return BinSearch(f, x0, x0 + step, eps);
 		}
+
+		internal static double Distance(double[] a, double[] b)
+		{
+			double dx = a[0] - b[0];
+			double dy = a[1] - b[1];
+
+			return Math.Sqrt(dx * dx + dy * dy);
+		}
 	}
 }
