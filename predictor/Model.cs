@@ -10,22 +10,6 @@ namespace Predictor
 {
 	static public class Model
 	{
-		static private string trimEnd(string str)
-		{
-			while (!char.IsNumber(str[str.Length - 1])) str = str.Substring(0, str.Length - 1);
-			return str;
-		}
-
-		static private double parseBetween(string str, char c1, char c2)
-		{
-			int firstSign = str.IndexOf(c1) + 1;
-			int lastSign = str.IndexOf(c2);
-			string substr = str.Substring(firstSign, lastSign - firstSign);
-			substr = trimEnd(substr);
-			double res = double.Parse(substr);
-			return res;
-		}
-
 		static public string FirstIntegralInfer(List<double[]> points, bool visualize = false)
 		{
 			Variable<double> alpha = Variable.GaussianFromMeanAndVariance(4, 1).Named("alpha");
