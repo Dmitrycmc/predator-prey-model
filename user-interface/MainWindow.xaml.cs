@@ -22,14 +22,14 @@ namespace user_interface
 		{
 			InitializeComponent();
 			sde = Generator.getRandomSystem();
-			Demonstrate(false);
+			Demonstrate(true);
 		}
 
-		public void Demonstrate(bool myWay)
+		public void Demonstrate(bool myWay = false)
 		{
 			const double dt = 0.01;
 			double stdDev = 0.05;
-			int n = 20;
+			int n = 100;
 
 			string wayName;
 
@@ -43,8 +43,6 @@ namespace user_interface
 				sde.OSLO(dt);
 			}
 
-			//MessageBox.Show(wayName + " squared error: " + sde.GetAverageSquaredError());
-
 			var equilibriumPoint = sde.GetEquilibriumPoint();
 			plot.drawPoints("Equilibrium point", equilibriumPoint);
 
@@ -53,10 +51,19 @@ namespace user_interface
 
 			var measurements = Generator.getMeasurements(exactSol, stdDev, n);
 			plot.drawPoints(wayName + "noised", measurements);
+			
+			MessageBox.Show(wayName + " squared error: " + sde.GetAverageSquaredError());
+			
 			try
 			{
 				var a = Model.FirstIntegralInfer(measurements);
-				MessageBox.Show(a);
+				SDE predicted = new SDE(a[0], a[1], a[2], a[3], a[4]);
+
+				MessageBox.Show(sde.alpha + " " + sde.beta + " " + sde.gamma + " " + sde.delta + '\n' + a[0] + " " + a[1] + " " + a[2] + " " + a[3]);
+				
+				predicted.Rays(dt);
+				var predictedSol = predicted.getSolution;
+				plot.drawLine("Infered", predictedSol);
 			}
 			catch (Exception e)
 			{

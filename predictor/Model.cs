@@ -10,19 +10,19 @@ namespace Predictor
 {
 	static public class Model
 	{
-		static public string FirstIntegralInfer(List<double[]> points, bool visualize = false)
+		static public double[] FirstIntegralInfer(List<double[]> points, bool visualize = false)
 		{
-			Variable<double> alpha = Variable.GaussianFromMeanAndVariance(4, 1).Named("alpha");
-			Variable<double> beta = Variable.GaussianFromMeanAndVariance(4, 1).Named("beta");
-			Variable<double> gamma = Variable.GaussianFromMeanAndVariance(4, 1).Named("gamma");
-			Variable<double> delta = Variable.GaussianFromMeanAndVariance(4, 1).Named("delta");
-			Variable<double> C = Variable.GaussianFromMeanAndVariance(4, 1).Named("C");
+			Variable<double> alpha = Variable.GaussianFromMeanAndVariance(4, 5).Named("alpha");
+			Variable<double> beta = Variable.GaussianFromMeanAndVariance(4, 5).Named("beta");
+			Variable<double> gamma = Variable.GaussianFromMeanAndVariance(4, 5).Named("gamma");
+			Variable<double> delta = Variable.GaussianFromMeanAndVariance(4, 5).Named("delta");
+			Variable<double> C = Variable.GaussianFromMeanAndVariance(4, 5).Named("C");
 			Variable<double> sum = 0;
 
 			Range dataRange = new Range(points.Count);
 			VariableArray<double> x = Variable.Array<double>(dataRange);
 			VariableArray<double> y = Variable.Array<double>(dataRange);
-
+			
 			using (Variable.ForEach(dataRange))
 			{
 				sum +=
@@ -30,7 +30,7 @@ namespace Predictor
 					+ beta * y[dataRange]
 					- gamma * Variable.Log(x[dataRange])
 					- alpha * Variable.Log(y[dataRange])
-					+ C;
+					- C;
 			}
 
 			sum.ObservedValue = 0;
@@ -52,20 +52,29 @@ namespace Predictor
 			{
 				InferenceEngine.Visualizer = new Microsoft.ML.Probabilistic.Compiler.Visualizers.WindowsVisualizer();
 				engine.ShowFactorGraph = true;
-			}
-			*/
+			}*/
+			
 
-			string noiseString = engine.Infer(C).ToString();
+			string cString = engine.Infer(C).ToString();
 			string alphaString = engine.Infer(alpha).ToString();
 			string betaString = engine.Infer(beta).ToString();
 			string gammaString = engine.Infer(gamma).ToString();
 			string deltaString = engine.Infer(delta).ToString();
 
-			string ans = "Noise: " + noiseString + Environment.NewLine;
+			string ans = "Noise: " + cString + Environment.NewLine;
 			ans += "alpha: " + alphaString + Environment.NewLine;
 			ans += "beta: " + betaString + Environment.NewLine;
 			ans += "gamma: " + gammaString + Environment.NewLine;
 			ans += "delta: " + deltaString + Environment.NewLine;
+			
+			return new double[] {
+				Utils.parseBetween(alphaString, '(', ' '),
+				Utils.parseBetween(betaString, '(', ' '),
+				Utils.parseBetween(gammaString, '(', ' '),
+				Utils.parseBetween(deltaString, '(', ' '),
+				Utils.parseBetween(cString, '(', ' '),
+			};
+			
 			/*
 			this.var = (double)1 / parseBetween(precisionString, '=', ']');
 			this.a = parseBetween(aString, '(', ' ');
@@ -77,7 +86,6 @@ namespace Predictor
 				inferredLine[i] = value;
 			}
 			*/
-			return ans;
 
 		}
 	}
