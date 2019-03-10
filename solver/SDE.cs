@@ -10,7 +10,8 @@ namespace Solver
 {
 	public class SDE
 	{
-		public readonly double alpha, beta, gamma, delta, x0, y0, xE, yE;
+		public readonly double alpha, beta, gamma, delta, x0, y0, xE, yE, C;
+		private bool byInitPoint;
 
 		private List<double[]> solution = null;
 		public List<double[]> getSolution
@@ -23,7 +24,7 @@ namespace Solver
 		
 		public double[] GetEquilibriumPoint()
 		{
-			return new double[2] { gamma / delta, alpha / beta };
+			return new double[2] { xE, yE };
 		}
 
 		public SDE(double alpha, double beta, double gamma, double delta, double x0, double y0)
@@ -34,10 +35,25 @@ namespace Solver
 			this.delta = delta;
 			this.x0 = x0;
 			this.y0 = y0;
+			
+			byInitPoint = true;
 
-			double[] equilibriumPoint = GetEquilibriumPoint();
-			xE = equilibriumPoint[0];
-			yE = equilibriumPoint[1];
+			xE = gamma / delta;
+			yE = alpha / beta;
+		}
+
+		public SDE(double alpha, double beta, double gamma, double delta, double C)
+		{
+			this.alpha = alpha;
+			this.beta = beta;
+			this.gamma = gamma;
+			this.delta = delta;
+			this.C = C;
+
+			byInitPoint = false;
+
+			xE = gamma / delta;
+			yE = alpha / beta;
 		}
 
 		private double CalcC(double x, double y)
@@ -49,7 +65,7 @@ namespace Solver
 		{
 			solution = new List<double[]>();
 			double eps = 0.001;
-			double C = CalcC(x0, y0);
+			double C = byInitPoint ? CalcC(x0, y0) : this.C;
 			double t0;
 			Func<double, double, double>
 				X = (phi, t) => xE + t * Math.Cos(phi),
@@ -58,7 +74,13 @@ namespace Solver
 			
 			for (double phi = 0; phi < 2 * Math.PI; phi += step / t0)
 			{
-				t0 = Utils.LogSearch(t => F(phi, t), eps);
+				try
+				{
+					t0 = Utils.LogSearch(t => F(phi, t), eps);
+				} catch (Exception e)
+				{
+					throw new Exception("Error in logSearch");
+				}
 				double x = X(phi, t0);
 				double y = Y(phi, t0);
 				solution.Add(new double[] { x, y });
@@ -89,7 +111,6 @@ namespace Solver
 			for (int i = 2; i < points.Count(); i++)
 			{
 				double d = Utils.Distance(p0, new double[2] { points[i].X[0], points[i].X[1] });
-				Debug.WriteLine(d0.ToString() + " " + d.ToString());
 				if (d > d0)
 				{
 					solution.Add(new double[] { points[i].X[0], points[i].X[1], points[i].T });
