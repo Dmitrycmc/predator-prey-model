@@ -32,23 +32,24 @@ namespace Predictor
 			Variable<double> beta = Variable.GaussianFromMeanAndVariance(4, 1).Named("beta");
 			Variable<double> gamma = Variable.GaussianFromMeanAndVariance(4, 1).Named("gamma");
 			Variable<double> delta = Variable.GaussianFromMeanAndVariance(4, 1).Named("delta");
-			Variable<double> noise = Variable.GaussianFromMeanAndVariance(0, 0.0025).Named("noise");
+			Variable<double> C = Variable.GaussianFromMeanAndVariance(4, 1).Named("C");
+			Variable<double> sum = 0;
 
 			Range dataRange = new Range(points.Count);
-			VariableArray<double> C = Variable.Array<double>(dataRange);
 			VariableArray<double> x = Variable.Array<double>(dataRange);
 			VariableArray<double> y = Variable.Array<double>(dataRange);
 
 			using (Variable.ForEach(dataRange))
 			{
-				C[dataRange] =
+				sum +=
 					delta * x[dataRange]
 					+ beta * y[dataRange]
 					- gamma * Variable.Log(x[dataRange])
 					- alpha * Variable.Log(y[dataRange])
-					;//+ noise;
+					+ C;
 			}
 
+			sum.ObservedValue = 0;
 			double[] xObserved = new double[points.Count];
 			double[] yObserved = new double[points.Count];
 
@@ -70,7 +71,7 @@ namespace Predictor
 			}
 			*/
 
-			string noiseString = "-";//engine.Infer(noise).ToString();
+			string noiseString = engine.Infer(C).ToString();
 			string alphaString = engine.Infer(alpha).ToString();
 			string betaString = engine.Infer(beta).ToString();
 			string gammaString = engine.Infer(gamma).ToString();
@@ -93,7 +94,7 @@ namespace Predictor
 			}
 			*/
 			return ans;
-			
+
 		}
 	}
 }
