@@ -28,8 +28,8 @@ namespace user_interface
 		public void Demonstrate(bool myWay = false)
 		{
 			const double dt = 0.01;
-			double stdDev = 0.005;
-			int n = 100;
+			double stdDev = 0.05;
+			int n = 50;
 
 			string wayName;
 
@@ -44,8 +44,10 @@ namespace user_interface
 			}
 
 			label_squaredError.Content = wayName + " squared error: " + sde.GetAverageSquaredError();
-			
+
 			plot.drawPoints("Equilibrium point", sde.GetEquilibriumPoint());
+
+			plot.drawPoints("Initial point", new double[] {sde.x0, sde.y0 });
 
 			var exactSol = sde.getSolution;
 			plot.drawLine(wayName + " exact", exactSol);
@@ -64,6 +66,8 @@ namespace user_interface
 				predicted.Rays(dt);
 				var predictedSol = predicted.getSolution;
 				plot.drawLine("Infered", predictedSol);
+				// log.normal
+				plot.drawPoints("Equilibrium point 2", predicted.GetEquilibriumPoint());
 			}
 			catch (Exception e)
 			{
