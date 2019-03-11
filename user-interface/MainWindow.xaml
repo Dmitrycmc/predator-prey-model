@@ -9,7 +9,8 @@
         Title="MainWindow" Height="711.62" Width="696.404">
     <Grid>
         <controls:PointShapeLine x:Name="plot" Margin="10,10,9.8,57.4"/>
-        <Button x:Name="Button_solve1" Content="Button" HorizontalAlignment="Left" Margin="298,644,0,0" VerticalAlignment="Top" Width="75" Click="Button_solve1_Click"/>
-        <Button x:Name="Button_solve2" Content="Button" HorizontalAlignment="Left" Margin="416,644,0,0" VerticalAlignment="Top" Width="75" Click="Button_solve2_Click"/>
+        <Button x:Name="Button_solve1" Content="Button" HorizontalAlignment="Left" Margin="44,647,0,0" VerticalAlignment="Top" Width="75" Click="Button_solve1_Click"/>
+        <Button x:Name="Button_solve2" Content="Button" HorizontalAlignment="Left" Margin="162,647,0,0" VerticalAlignment="Top" Width="75" Click="Button_solve2_Click"/>
+        <Label x:Name="label_squaredError" Content="Label" HorizontalAlignment="Left" Margin="257,644,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
