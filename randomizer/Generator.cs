@@ -10,7 +10,7 @@ namespace Randomizer
 		static public SDE getRandomSystem()
 		{
 			double minValue = 1;
-			double maxValue = 2;
+			double maxValue = 3;
 			double alpha = Rand.UniformBetween(minValue, maxValue);
 			double beta = Rand.UniformBetween(minValue, maxValue);
 			double gamma = Rand.UniformBetween(minValue, maxValue);

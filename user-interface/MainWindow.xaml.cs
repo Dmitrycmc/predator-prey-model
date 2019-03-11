@@ -28,7 +28,7 @@ namespace user_interface
 		public void Demonstrate(bool myWay = false)
 		{
 			const double dt = 0.01;
-			double stdDev = 0.05;
+			double stdDev = 0.005;
 			int n = 100;
 
 			string wayName;
@@ -43,23 +43,23 @@ namespace user_interface
 				sde.OSLO(dt);
 			}
 
-			var equilibriumPoint = sde.GetEquilibriumPoint();
-			plot.drawPoints("Equilibrium point", equilibriumPoint);
+			label_squaredError.Content = wayName + " squared error: " + sde.GetAverageSquaredError();
+			
+			plot.drawPoints("Equilibrium point", sde.GetEquilibriumPoint());
 
 			var exactSol = sde.getSolution;
-			plot.drawLine(wayName + " orig", sde.getSolution);
+			plot.drawLine(wayName + " exact", exactSol);
 
 			var measurements = Generator.getMeasurements(exactSol, stdDev, n);
-			plot.drawPoints(wayName + "noised", measurements);
+			plot.drawPoints(wayName + " noised", measurements);
 			
-			MessageBox.Show(wayName + " squared error: " + sde.GetAverageSquaredError());
 			
 			try
 			{
-				var a = Model.FirstIntegralInfer(measurements);
+				var a = Model.FirstIntegralInfer(measurements, sde.alpha);
 				SDE predicted = new SDE(a[0], a[1], a[2], a[3], a[4]);
 
-				MessageBox.Show(sde.alpha + " " + sde.beta + " " + sde.gamma + " " + sde.delta + '\n' + a[0] + " " + a[1] + " " + a[2] + " " + a[3]);
+				MessageBox.Show(sde.alpha + " " + sde.beta + " " + sde.gamma + " " + sde.delta + '\n' + a[0] + " " + a[1] + " " + a[2] + " " + a[3] + " " + a[4]);
 				
 				predicted.Rays(dt);
 				var predictedSol = predicted.getSolution;

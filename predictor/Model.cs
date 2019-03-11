@@ -10,14 +10,19 @@ namespace Predictor
 {
 	static public class Model
 	{
-		static public double[] FirstIntegralInfer(List<double[]> points, bool visualize = false)
+		static public double[] FirstIntegralInfer(List<double[]> points, double strictAlpha = 0, bool visualize = false)
 		{
-			Variable<double> alpha = Variable.GaussianFromMeanAndVariance(4, 5).Named("alpha");
-			Variable<double> beta = Variable.GaussianFromMeanAndVariance(4, 5).Named("beta");
-			Variable<double> gamma = Variable.GaussianFromMeanAndVariance(4, 5).Named("gamma");
-			Variable<double> delta = Variable.GaussianFromMeanAndVariance(4, 5).Named("delta");
-			Variable<double> C = Variable.GaussianFromMeanAndVariance(4, 5).Named("C");
+			Variable<double> alpha = Variable.GaussianFromMeanAndVariance(5, 25/9).Named("alpha");
+			Variable<double> beta = Variable.GaussianFromMeanAndVariance(5, 25 / 9).Named("beta");
+			Variable<double> gamma = Variable.GaussianFromMeanAndVariance(5, 25 / 9).Named("gamma");
+			Variable<double> delta = Variable.GaussianFromMeanAndVariance(5, 25 / 9).Named("delta");
+			Variable<double> C = Variable.GaussianFromMeanAndVariance(5, 10).Named("C");
 			Variable<double> sum = 0;
+
+			if (strictAlpha != 0)
+			{
+				alpha.ObservedValue = strictAlpha;
+			}
 
 			Range dataRange = new Range(points.Count);
 			VariableArray<double> x = Variable.Array<double>(dataRange);
@@ -68,7 +73,7 @@ namespace Predictor
 			ans += "delta: " + deltaString + Environment.NewLine;
 			
 			return new double[] {
-				Utils.parseBetween(alphaString, '(', ' '),
+				strictAlpha != 0 ? strictAlpha : Utils.parseBetween(alphaString, '(', ' '),
 				Utils.parseBetween(betaString, '(', ' '),
 				Utils.parseBetween(gammaString, '(', ' '),
 				Utils.parseBetween(deltaString, '(', ' '),
