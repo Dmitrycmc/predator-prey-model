@@ -66,7 +66,8 @@ namespace user_interface
 				predicted.Rays(dt);
 				var predictedSol = predicted.getSolution;
 				plot.drawLine("Infered", predictedSol);
-				// log.normal
+				// todo: log.normal
+				// todo: second met
 				plot.drawPoints("Equilibrium point 2", predicted.GetEquilibriumPoint());
 			}
 			catch (Exception e)
