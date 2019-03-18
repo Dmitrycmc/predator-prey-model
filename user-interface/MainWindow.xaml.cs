@@ -8,6 +8,7 @@ using Solver;
 using Randomizer;
 using Predictor;
 using System;
+using System.Collections.Generic;
 
 namespace user_interface
 {
@@ -16,69 +17,66 @@ namespace user_interface
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		SDE sde;
+		const double dt = 0.01;
+		SDE sde0, sde1;
+		List<double[]> measurements;
 
 		public MainWindow()
 		{
 			InitializeComponent();
-			sde = Generator.getRandomSystem();
-			Demonstrate(true);
+			sde0 = Generator.getRandomSystem();
 		}
 
-		public void Demonstrate(bool myWay = false)
+		private void Generate(object sender, RoutedEventArgs e)
 		{
-			const double dt = 0.01;
-			double stdDev = 0.005;
-			int n = 100;
+			int n = int.Parse(textBoxN.Text);
+			double stdDev = double.Parse(textBoxStdDev.Text);
 
+			bool myWay = (bool) checkBoxMyWay.IsChecked;
 			string wayName;
 
 			if (myWay)
 			{
 				wayName = "Rays";
-				sde.Rays(dt);
-			} else
+				sde0.Rays(dt);
+			}
+			else
 			{
 				wayName = "OLSO";
-				sde.OSLO(dt);
+				sde0.OSLO(dt);
 			}
 
-			label_squaredError.Content = wayName + " squared error: " + sde.GetAverageSquaredError();
+			textBlockrRes.Text = wayName + " squared error: " + sde0.GetAverageSquaredError() + Environment.NewLine;
 			
-			plot.drawPoints("Equilibrium point", sde.GetEquilibriumPoint());
+			var exactSol = sde0.getSolution;
+			plot.drawLine(wayName + " exact solution", exactSol);
 
-			var exactSol = sde.getSolution;
-			plot.drawLine(wayName + " exact", exactSol);
+			plot.drawPoints("Equilibrium point 0", sde0.GetEquilibriumPoint());
+			
+			plot.drawPoints("Initial point", new double[] { sde0.x0, sde0.y0 });
 
-			var measurements = Generator.getMeasurements(exactSol, stdDev, n);
-			plot.drawPoints(wayName + " noised", measurements);
+			measurements = Generator.getMeasurements(exactSol, stdDev, n);
+			plot.drawPoints("Measurements", measurements);
 			
-			
+		}
+
+		private void infer(object sender, RoutedEventArgs e)
+		{
 			try
 			{
-				var a = Model.FirstIntegralInfer(measurements, sde.alpha);
-				SDE predicted = new SDE(a[0], a[1], a[2], a[3], a[4]);
+				var a = Model.FirstIntegralInfer(measurements, sde0.alpha);
+				sde1 = new SDE(a[0], a[1], a[2], a[3], a[4]);
 
-				MessageBox.Show(sde.alpha + " " + sde.beta + " " + sde.gamma + " " + sde.delta + '\n' + a[0] + " " + a[1] + " " + a[2] + " " + a[3] + " " + a[4]);
-				
-				predicted.Rays(dt);
-				var predictedSol = predicted.getSolution;
+				sde1.Rays(dt);
+				var predictedSol = sde1.getSolution;
 				plot.drawLine("Infered", predictedSol);
+				
+				plot.drawPoints("Equilibrium point 1", sde1.GetEquilibriumPoint());
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
-				MessageBox.Show(e.Message);
+				MessageBox.Show("Error");
 			}
-		}
-
-		private void Button_solve1_Click(object sender, RoutedEventArgs e)
-		{
-			Demonstrate(true);
-		}
-
-		private void Button_solve2_Click(object sender, RoutedEventArgs e)
-		{
-			Demonstrate(false);
 		}
 	}
 }
