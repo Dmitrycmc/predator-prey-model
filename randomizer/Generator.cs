@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.ML.Probabilistic.Math;
-using Solver;
 
 namespace Randomizer
 {
     static public class Generator
 	{
-		static public SDE getRandomSystem()
+		static public double[] getRandomParams()
 		{
 			double minValue = 1;
 			double maxValue = 3;
@@ -18,7 +17,7 @@ namespace Randomizer
 			double x0 = Rand.UniformBetween(minValue, maxValue);
 			double y0 = Rand.UniformBetween(minValue, maxValue);
 			
-			return new SDE(alpha, beta, gamma, delta, x0, y0);
+			return new double[] { alpha, beta, gamma, delta, x0, y0 };
 		}
 
 

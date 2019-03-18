@@ -34,9 +34,6 @@
     <Reference Include="Microsoft.ML.Probabilistic, Version=0.3.1810.501, Culture=neutral, PublicKeyToken=e4813102a62778da, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ML.Probabilistic.0.3.1810.501\lib\netstandard2.0\Microsoft.ML.Probabilistic.dll</HintPath>
     </Reference>
-    <Reference Include="solver">
-      <HintPath>..\solver\bin\Debug\solver.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
