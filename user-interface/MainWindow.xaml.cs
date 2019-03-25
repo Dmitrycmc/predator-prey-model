@@ -69,14 +69,14 @@ namespace user_interface
 			textBlockrRes.Text = wayName + " squared error: " + sde0.GetAverageSquaredError() + Environment.NewLine;
 
 			var exactSol = sde0.getSolution;
-			plot.drawLine(wayName + " exact sol", exactSol, Brushes.LightGreen);
+			plot.drawLine(wayName + " exact sol", exactSol, Brushes.Green);
 
-			plot.drawPoints("Exact eq", sde0.GetEquilibriumPoint(), Brushes.LightGreen);
+			plot.drawPoints("Exact eq", sde0.GetEquilibriumPoint(), Brushes.Green);
 
-			plot.drawPoints("Initial point", new double[] { sde0.x0, sde0.y0 }, Brushes.LightGreen);
+			plot.drawPoints("Initial point", new double[] { sde0.x0, sde0.y0 }, Brushes.Green);
 
 			measurements = Generator.getMeasurements(exactSol, stdDev, n);
-			plot.drawPoints("Meas", measurements, Brushes.Green);
+			plot.drawPoints("Meas", measurements, Brushes.LightGreen);
 		}
 
 		private string printParamReport(double val0, double val1, string name)
@@ -103,10 +103,7 @@ namespace user_interface
 				delta1 *= alpha0 / alpha1;
 				alpha1 *= alpha0 / alpha1;
 			}
-			else
-			{
-				res += printParamReport(alpha0, alpha1, "Alpha");
-			}
+			res += printParamReport(alpha0, alpha1, "Alpha");
 			res += printParamReport(beta0, beta1, "Beta");
 			res += printParamReport(gamma0, gamma1, "Gamma");
 			res += printParamReport(delta0, delta1, "Delta");
@@ -115,7 +112,7 @@ namespace user_interface
 					Math.Pow(beta1 - beta0, 2) +
 					Math.Pow(gamma1 - gamma0, 2) +
 					Math.Pow(delta1 - delta0, 2)
-				) / (myWay ? 3 : 4));
+				) / 4);
 
 			res += "Squared error: " + sqerror;
 			MessageBox.Show("Squared error: " + sqerror);
