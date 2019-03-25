@@ -58,6 +58,5 @@
         <TextBlock x:Name="textBlockrRes" Grid.Column="1" Margin="9.8,10,19.6,21.2" Grid.Row="10" TextWrapping="Wrap" Grid.ColumnSpan="2" FontSize="16" FontFamily="Times New Roman"/>
         <CheckBox x:Name="checkBoxMyWay" Content="My way" Grid.Column="1" HorizontalAlignment="Left" Margin="9,6,0,0" Grid.Row="8" VerticalAlignment="Top" Height="18" Width="321" Grid.ColumnSpan="2" IsChecked="True"/>
         <Button Content="Gen params" Margin="9.8,9.8,24.6,10" Grid.Column="1" Grid.Row="9" Click="Generate"/>
-
     </Grid>
 </Window>

@@ -35,7 +35,6 @@ namespace user_interface
 			textBoxDelta.Text = rand[3].ToString();
 			textBoxX0.Text = rand[4].ToString();
 			textBoxY0.Text = rand[5].ToString();
-
 		}
 
 		private void GetMeasurements(object sender, RoutedEventArgs e)
