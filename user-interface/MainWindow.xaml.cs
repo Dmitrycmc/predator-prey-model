@@ -9,6 +9,7 @@ using Randomizer;
 using Predictor;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace user_interface
 {
@@ -132,17 +133,27 @@ namespace user_interface
 			bool myWay = (bool)checkBoxMyWay.IsChecked;
 			try
 			{
-				var inferedParams = Model.FirstIntegralInfer(measurements);
-				sde1 = new SDE(inferedParams[0], inferedParams[1], inferedParams[2], inferedParams[3], inferedParams[4]);
+				double[] inferedParams;
+				if (myWay)
+				{
+					inferedParams = Model.FirstIntegralInfer(measurements);
+					sde1 = new SDE(inferedParams[0], inferedParams[1], inferedParams[2], inferedParams[3], inferedParams[4]);
+					textBlockrRes.Text += printParamsReport(sde0, sde1, myWay);
+					try
+					{
+						sde1.Rays(dt);
+						var predictedSol = sde1.getSolution;
+						plot.drawLine("Infered sol", predictedSol);
+					}
+					catch (Exception) { MessageBox.Show("Error occured during drawing"); }
+				} else
+				{
+					inferedParams = Model.numericalMethodInfer(measurements);
+					sde1 = new SDE(inferedParams[0], inferedParams[1], inferedParams[2], inferedParams[3], 0, 0);
+					textBlockrRes.Text += printParamsReport(sde0, sde1, myWay);
+				}
 
-				sde1.Rays(dt);
-				var predictedSol = sde1.getSolution;
-				plot.drawLine("Infered sol", predictedSol);
-				
 				plot.drawPoints("Infered eq 1", sde1.GetEquilibriumPoint());
-				textBlockrRes.Text += printParamsReport(sde0, sde1, myWay);
-
-
 			}
 			catch (Exception)
 			{

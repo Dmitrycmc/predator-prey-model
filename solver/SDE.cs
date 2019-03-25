@@ -77,7 +77,7 @@ namespace Solver
 				try
 				{
 					t0 = Utils.LogSearch(t => F(phi, t), eps);
-				} catch (Exception e)
+				} catch (Exception)
 				{
 					throw new Exception("Error in logSearch");
 				}

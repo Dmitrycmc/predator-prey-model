@@ -2,6 +2,7 @@
 using Microsoft.ML.Probabilistic.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +11,93 @@ namespace Predictor
 {
 	static public class Model
 	{
+
+		static public double[] numericalMethodInfer(List<double[]> points, double strictAlpha = 0, bool visualize = false)
+		{
+			Variable<double> alpha = Variable.GaussianFromMeanAndVariance(2, 1).Named("alpha");
+			Variable<double> beta = Variable.GaussianFromMeanAndVariance(2, 1).Named("beta");
+			Variable<double> gamma = Variable.GaussianFromMeanAndVariance(2, 1).Named("gamma");
+			Variable<double> delta = Variable.GaussianFromMeanAndVariance(2, 1).Named("delta");
+			
+			Range dataRange = new Range(points.Count);
+			VariableArray<double> dxdt = Variable.Array<double>(dataRange);
+			VariableArray<double> dydt = Variable.Array<double>(dataRange);
+			VariableArray<double> x = Variable.Array<double>(dataRange);
+			VariableArray<double> y = Variable.Array<double>(dataRange);
+			
+			using (Variable.ForEach(dataRange))
+			{
+				dxdt[dataRange] = (alpha - beta * y[dataRange]) * x[dataRange];
+				dydt[dataRange] = (-gamma + delta * x[dataRange]) * y[dataRange];
+			}
+			
+			double[] xObserved = new double[points.Count];
+			double[] yObserved = new double[points.Count];
+
+			double[] dxdtObserved = new double[points.Count];
+			double[] dydtObserved = new double[points.Count];
+			
+			for (int i = 0; i < points.Count; i++)
+			{
+				xObserved[i] = points[i][0];
+				yObserved[i] = points[i][1];
+			}
+			
+			dxdtObserved[0] = (xObserved[1] - xObserved[0]) / (points[1][2] - points[0][2]);
+			dydtObserved[0] = (yObserved[1] - yObserved[0]) / (points[1][2] - points[0][2]);
+			
+			dxdtObserved[points.Count - 1] = (xObserved[points.Count - 1] - xObserved[points.Count - 2]) / (points[points.Count - 1][2] - points[points.Count - 2][2]);
+			dydtObserved[points.Count - 1] = (yObserved[points.Count - 1] - yObserved[points.Count - 2]) / (points[points.Count - 1][2] - points[points.Count - 2][2]);
+			
+			for (int i = 1; i < points.Count - 1; i++)
+			{
+				dxdtObserved[i] = (xObserved[i + 1] - xObserved[i - 1]) / (points[i + 1][2] - points[i - 1][2]);
+				dydtObserved[i] = (yObserved[i + 1] - yObserved[i - 1]) / (points[i + 1][2] - points[i - 1][2]);	
+			}
+			
+			x.ObservedValue = xObserved;
+			y.ObservedValue = yObserved;
+			dxdt.ObservedValue = dxdtObserved;
+			dydt.ObservedValue = dydtObserved;
+			Debug.WriteLine(1);
+			InferenceEngine engine = new InferenceEngine(new ExpectationPropagation());
+
+			/*
+			if (visualize)
+			{
+				InferenceEngine.Visualizer = new Microsoft.ML.Probabilistic.Compiler.Visualizers.WindowsVisualizer();
+				engine.ShowFactorGraph = true;
+			}*/
+
+			Debug.WriteLine(2);
+			string alphaString = engine.Infer(alpha).ToString();
+			string betaString = engine.Infer(beta).ToString();
+			string gammaString = engine.Infer(gamma).ToString();
+			string deltaString = engine.Infer(delta).ToString();
+
+			Debug.WriteLine(3);
+			string ans = "alpha: " + alphaString + Environment.NewLine;
+			ans += "beta: " + betaString + Environment.NewLine;
+			ans += "gamma: " + gammaString + Environment.NewLine;
+			ans += "delta: " + deltaString + Environment.NewLine;
+
+			Debug.WriteLine(4);
+			return new double[] {
+				Utils.parseBetween(alphaString, '(', ' '),
+				Utils.parseBetween(betaString, '(', ' '),
+				Utils.parseBetween(gammaString, '(', ' '),
+				Utils.parseBetween(deltaString, '(', ' ')
+			};
+			
+		}
+		
+
 		static public double[] FirstIntegralInfer(List<double[]> points, double strictAlpha = 0, bool visualize = false)
 		{
-			Variable<double> alpha = Variable.GaussianFromMeanAndVariance(5, 25/9).Named("alpha");
-			Variable<double> beta = Variable.GaussianFromMeanAndVariance(5, 25 / 9).Named("beta");
-			Variable<double> gamma = Variable.GaussianFromMeanAndVariance(5, 25 / 9).Named("gamma");
-			Variable<double> delta = Variable.GaussianFromMeanAndVariance(5, 25 / 9).Named("delta");
+			Variable<double> alpha = Variable.GaussianFromMeanAndVariance(2, 1).Named("alpha");
+			Variable<double> beta = Variable.GaussianFromMeanAndVariance(2, 1).Named("beta");
+			Variable<double> gamma = Variable.GaussianFromMeanAndVariance(2, 1).Named("gamma");
+			Variable<double> delta = Variable.GaussianFromMeanAndVariance(2, 1).Named("delta");
 			Variable<double> C = Variable.GaussianFromMeanAndVariance(5, 10).Named("C");
 			Variable<double> sum = 0;
 
@@ -79,19 +161,6 @@ namespace Predictor
 				Utils.parseBetween(deltaString, '(', ' '),
 				Utils.parseBetween(cString, '(', ' '),
 			};
-			
-			/*
-			this.var = (double)1 / parseBetween(precisionString, '=', ']');
-			this.a = parseBetween(aString, '(', ' ');
-			this.b = parseBetween(bString, '(', ' ');
-
-			for (int i = 0; i < sample.Length; i++)
-			{
-				double value = this.a * i + this.b;
-				inferredLine[i] = value;
-			}
-			*/
-
 		}
 	}
 }
