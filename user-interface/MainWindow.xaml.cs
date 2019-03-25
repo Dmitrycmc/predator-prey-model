@@ -81,12 +81,13 @@ namespace user_interface
 
 		private string printParamReport(double val0, double val1, string name)
 		{
-			string res = "";
-			res += name + " origin: " + val0 + Environment.NewLine;
-			res += name + " predicted: " + val1 + Environment.NewLine;
-			res += name + " abs error: " + (val1 - val0) + Environment.NewLine;
-			res += name + " rel error: " + (val1 - val0) / val0 + Environment.NewLine;
-			return res;
+			return 
+				name + " " + 
+				Math.Round(val0, 2) + " -> " + 
+				Math.Round(val1, 2) + " (" + 
+				Math.Round(val1 - val0, 2) + ") " + 
+				Math.Round((val1 - val0) * 100 / val0, 2) + "%" + 
+				Environment.NewLine;
 		}
 
 		private string printParamsReport(SDE sde0, SDE sde1, bool myWay)
@@ -97,19 +98,13 @@ namespace user_interface
 
 			if (myWay)
 			{
-				beta0 /= alpha0;
-				gamma0 /= alpha0;
-				delta0 /= alpha0;
-				alpha0 = 1;
-
-				beta1 /= alpha1;
-				gamma1 /= alpha1;
-				delta1 /= alpha1;
-				alpha1 = 1;
+				beta1 *= alpha0 / alpha1;
+				gamma1 *= alpha0 / alpha1;
+				delta1 *= alpha0 / alpha1;
+				alpha1 *= alpha0 / alpha1;
 			}
 			else
 			{
-
 				res += printParamReport(alpha0, alpha1, "Alpha");
 			}
 			res += printParamReport(beta0, beta1, "Beta");
@@ -123,8 +118,9 @@ namespace user_interface
 				) / (myWay ? 3 : 4));
 
 			res += "Squared error: " + sqerror;
+			MessageBox.Show("Squared error: " + sqerror);
 
-			return res;
+			return res + Environment.NewLine; ;
 
 		}
 
@@ -139,20 +135,20 @@ namespace user_interface
 					inferedParams = Model.FirstIntegralInfer(measurements);
 					sde1 = new SDE(inferedParams[0], inferedParams[1], inferedParams[2], inferedParams[3], inferedParams[4]);
 					textBlockrRes.Text += printParamsReport(sde0, sde1, myWay);
-					try
-					{
-						sde1.Rays(dt);
-						var predictedSol = sde1.getSolution;
-						plot.drawLine("Infered sol", predictedSol);
-					}
-					catch (Exception) { MessageBox.Show("Error occured during drawing"); }
+					
 				} else
 				{
 					inferedParams = Model.numericalMethodInfer(measurements);
-					sde1 = new SDE(inferedParams[0], inferedParams[1], inferedParams[2], inferedParams[3], 0, 0);
+					sde1 = new SDE(inferedParams[0], inferedParams[1], inferedParams[2], inferedParams[3], sde0.x0, sde0.y0);
 					textBlockrRes.Text += printParamsReport(sde0, sde1, myWay);
 				}
-
+				try
+				{
+					sde1.Rays(dt);
+					var predictedSol = sde1.getSolution;
+					plot.drawLine("Infered sol", predictedSol);
+				}
+				catch (Exception) { MessageBox.Show("Error occured during drawing"); }
 				plot.drawPoints("Infered eq 1", sde1.GetEquilibriumPoint());
 			}
 			catch (Exception)
