@@ -28,8 +28,6 @@
 
         <controls:PointShapeLine x:Name="plot" Margin="10,10,10.2,10.2" Grid.RowSpan="11"/>
 
-        <Rectangle Grid.ColumnSpan="3" Fill="#FFF4F4F5" Grid.RowSpan="11" Stroke="Black" Margin="443,0,9.6,10.2"/>
-
         <TextBlock Grid.Column="1" Margin="10,10,7,0" TextWrapping="Wrap" Text="Size of sample:" VerticalAlignment="Top" Height="23" Grid.RowSpan="2"/>
         <TextBox Grid.Column="2" Height="23" Margin="10,10,20,0" TextWrapping="Wrap" VerticalAlignment="Top" x:Name="textBoxN" Text="50" Grid.RowSpan="2"/>
 
@@ -55,7 +53,7 @@
         <TextBox Grid.Column="2" Height="23" Margin="10,10,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="7" x:Name="textBoxY0" Text="1" Grid.RowSpan="2"/>
 
         <Button Content="Get measurements" Margin="139.8,9.8,96.6,10" Grid.Column="1" Grid.Row="9" Click="GetMeasurements" Grid.ColumnSpan="2"/>
-        <Button Content="Infer" Margin="118.4,9.8,19.6,10" Grid.Column="2" Grid.Row="9" Click="infer"/>
+        <Button Content="Infer" Margin="118.4,9.8,19.6,10" Grid.Column="2" Grid.Row="9" Click="Infer"/>
 
         <TextBlock x:Name="textBlockrRes" Grid.Column="1" Margin="9.8,10,19.6,21.2" Grid.Row="10" TextWrapping="Wrap" Grid.ColumnSpan="2" FontSize="16" FontFamily="Times New Roman"/>
         <CheckBox x:Name="checkBoxMyWay" Content="My way" Grid.Column="1" HorizontalAlignment="Left" Margin="9,6,0,0" Grid.Row="8" VerticalAlignment="Top" Height="18" Width="321" Grid.ColumnSpan="2" IsChecked="True"/>
