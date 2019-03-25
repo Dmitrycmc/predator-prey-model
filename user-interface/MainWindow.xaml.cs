@@ -69,14 +69,14 @@ namespace user_interface
 			textBlockrRes.Text = wayName + " squared error: " + sde0.GetAverageSquaredError() + Environment.NewLine;
 
 			var exactSol = sde0.getSolution;
-			plot.drawLine(wayName + " exact sol", exactSol);
+			plot.drawLine(wayName + " exact sol", exactSol, Brushes.LightGreen);
 
-			plot.drawPoints("Exact eq", sde0.GetEquilibriumPoint());
+			plot.drawPoints("Exact eq", sde0.GetEquilibriumPoint(), Brushes.LightGreen);
 
-			plot.drawPoints("Initial point", new double[] { sde0.x0, sde0.y0 });
+			plot.drawPoints("Initial point", new double[] { sde0.x0, sde0.y0 }, Brushes.LightGreen);
 
 			measurements = Generator.getMeasurements(exactSol, stdDev, n);
-			plot.drawPoints("Meas", measurements);
+			plot.drawPoints("Meas", measurements, Brushes.Green);
 		}
 
 		private string printParamReport(double val0, double val1, string name)
@@ -127,6 +127,7 @@ namespace user_interface
 		private void Infer(object sender, RoutedEventArgs e)
 		{
 			bool myWay = (bool)checkBoxMyWay.IsChecked;
+			Brush color;
 			try
 			{
 				double[] inferedParams;
@@ -135,21 +136,22 @@ namespace user_interface
 					inferedParams = Model.FirstIntegralInfer(measurements);
 					sde1 = new SDE(inferedParams[0], inferedParams[1], inferedParams[2], inferedParams[3], inferedParams[4]);
 					textBlockrRes.Text += printParamsReport(sde0, sde1, myWay);
-					
+					color = Brushes.Orange;
 				} else
 				{
 					inferedParams = Model.numericalMethodInfer(measurements);
 					sde1 = new SDE(inferedParams[0], inferedParams[1], inferedParams[2], inferedParams[3], sde0.x0, sde0.y0);
 					textBlockrRes.Text += printParamsReport(sde0, sde1, myWay);
+					color = Brushes.Blue;
 				}
 				try
 				{
 					sde1.Rays(dt);
 					var predictedSol = sde1.getSolution;
-					plot.drawLine("Infered sol", predictedSol);
+					plot.drawLine("Infered sol", predictedSol, color);
 				}
 				catch (Exception) { MessageBox.Show("Error occured during drawing"); }
-				plot.drawPoints("Infered eq 1", sde1.GetEquilibriumPoint());
+				plot.drawPoints("Infered eq 1", sde1.GetEquilibriumPoint(), color);
 			}
 			catch (Exception)
 			{

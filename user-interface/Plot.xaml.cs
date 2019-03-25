@@ -19,44 +19,45 @@ namespace Wpf.CartesianChart.PointShapeLine
 			return result;
 		}
 
-		public void drawLine(string title, List<double[]> values, Geometry geometry = null)
+		public void drawLine(string title, List<double[]> values, Brush color, Geometry geometry = null)
 		{
-			drawLine(title, new ChartValues<ObservablePoint>(getPhasePathPoints(values)), geometry);
+			drawLine(title, new ChartValues<ObservablePoint>(getPhasePathPoints(values)), color, geometry);
 		}
 
-		public void drawLine(string title, ChartValues<ObservablePoint> values, Geometry geometry = null)
+		public void drawLine(string title, ChartValues<ObservablePoint> values, Brush color, Geometry geometry = null)
 		{
 			SeriesCollection.Add(new LineSeries
 			{
 				Title = title,
 				PointGeometry = geometry,
 				Values = values,
-				Fill = Brushes.Transparent
+				Fill = Brushes.Transparent,
+				Stroke = color
 			}
 			);
 		}
 
-		public void drawPoints(string title, double[] point, Geometry geometry = null)
+		public void drawPoints(string title, double[] point, Brush color, Geometry geometry = null)
 		{
-			drawPoints(title, new List<double[]>() { point }, geometry);
+			drawPoints(title, new List<double[]>() { point }, color, geometry);
 		}
 
-		public void drawPoints(string title, List<double[]> values, Geometry geometry = null)
+		public void drawPoints(string title, List<double[]> values, Brush color, Geometry geometry = null)
 		{
-			drawPoints(title, new ChartValues<ObservablePoint>(getPhasePathPoints(values)), geometry);
+			drawPoints(title, new ChartValues<ObservablePoint>(getPhasePathPoints(values)), color, geometry);
 		}
 
-		public void drawPoints(string title, ChartValues<ObservablePoint> values, Geometry geometry = null)
+		public void drawPoints(string title, ChartValues<ObservablePoint> values, Brush color, Geometry geometry = null)
 		{
 			if (geometry == null)
 			{
 				geometry = DefaultGeometries.Circle;
 			}
-			SeriesCollection.Add(new ScatterSeries
-			{
+			SeriesCollection.Add(new ScatterSeries {
 				Title = title,
 				PointGeometry = geometry,
-				Values = values
+				Values = values,
+				Fill = color
 				}
 			);
 		}
