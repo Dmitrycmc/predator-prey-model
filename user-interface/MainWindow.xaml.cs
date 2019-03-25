@@ -120,8 +120,14 @@ namespace user_interface
 			res += "Squared error: " + sqerror;
 			MessageBox.Show("Squared error: " + sqerror);
 
-			return res + Environment.NewLine; ;
+			return res + Environment.NewLine + Environment.NewLine;
 
+		}
+
+		private void Clear(object sender, RoutedEventArgs e)
+		{
+			plot.Clear();
+			textBlockrRes.Text = "";
 		}
 
 		private void Infer(object sender, RoutedEventArgs e)

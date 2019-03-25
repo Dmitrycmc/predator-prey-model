@@ -62,6 +62,11 @@ namespace Wpf.CartesianChart.PointShapeLine
 			);
 		}
 
+		public void Clear()
+		{
+			SeriesCollection.Clear();
+		}
+
 		public PointShapeLine()
 		{
 			InitializeComponent();
@@ -75,4 +80,5 @@ namespace Wpf.CartesianChart.PointShapeLine
 		public Func<double, string> YFormatter { get; set; }
 
 	}
+
 }
