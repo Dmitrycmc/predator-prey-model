@@ -6,10 +6,8 @@ namespace Randomizer
 {
     static public class Generator
 	{
-		static public double[] getRandomParams()
+		static public double[] getRandomParams(double minValue = 1, double maxValue = 3)
 		{
-			double minValue = 1;
-			double maxValue = 3;
 			double alpha = Rand.UniformBetween(minValue, maxValue);
 			double beta = Rand.UniformBetween(minValue, maxValue);
 			double gamma = Rand.UniformBetween(minValue, maxValue);

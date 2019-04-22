@@ -1,15 +1,12 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using LiveCharts;
-using LiveCharts.Defaults;
-using LiveCharts.Wpf;
-using Wpf.CartesianChart.PointShapeLine;
 using Solver;
 using Randomizer;
 using Predictor;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace user_interface
 {
@@ -118,13 +115,20 @@ namespace user_interface
 			MessageBox.Show("Squared error: " + sqerror);
 
 			return res + Environment.NewLine + Environment.NewLine;
-
 		}
 
 		private void Clear(object sender, RoutedEventArgs e)
 		{
 			plot.Clear();
 			textBlockrRes.Text = "";
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			Process p = new Process();
+			p.StartInfo.FileName = Directory.GetCurrentDirectory() + @"\..\..\..\..\collector\bin\Debug\collector.exe";
+			p.Start();
+			this.Close();
 		}
 
 		private void Infer(object sender, RoutedEventArgs e)
