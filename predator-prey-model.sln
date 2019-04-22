@@ -18,6 +18,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "predictor", "predictor\predictor.csproj", "{0F9B2999-FB2A-49E1-BB46-839228ACA06B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "collector", "collector\collector.csproj", "{D74ECBEA-CD9D-4628-B79F-4FA51629A899}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0F9B2999-FB2A-49E1-BB46-839228ACA06B} = {0F9B2999-FB2A-49E1-BB46-839228ACA06B}
+		{E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F} = {E5A324E9-F6ED-4C8C-8300-9D5B0980EC9F}
+		{F4D2D3F7-398A-4AE9-BA9A-412943BAC6D4} = {F4D2D3F7-398A-4AE9-BA9A-412943BAC6D4}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
