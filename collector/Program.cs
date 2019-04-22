@@ -17,7 +17,7 @@ namespace collector
 		static void WriteToFile(string str)
 		{
 			using (StreamWriter file =
-			   new StreamWriter(Directory.GetCurrentDirectory() + @"\..\..\..\..\" + "Report.txt", true))
+			   new StreamWriter(Directory.GetCurrentDirectory() + @"\..\..\..\..\" + @"\reports\Report.csv", true))
 			{
 				file.WriteLine(str);
 			}
@@ -68,8 +68,8 @@ namespace collector
 			int experimentsNum = ReadInt("number of experiments");
 			int sampleSize = ReadInt("size of sample");
 			double stdDev = ReadDouble("stdDev");
-			double minValue = ReadInt("minValue");
-			double maxValue = ReadInt("maxValue");
+			double minValue = ReadDouble("minValue");
+			double maxValue = ReadDouble("maxValue");
 
 			string report;
 

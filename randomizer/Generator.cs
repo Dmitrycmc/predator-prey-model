@@ -12,8 +12,8 @@ namespace Randomizer
 			double beta = Rand.UniformBetween(minValue, maxValue);
 			double gamma = Rand.UniformBetween(minValue, maxValue);
 			double delta = Rand.UniformBetween(minValue, maxValue);
-			double x0 = Rand.UniformBetween(minValue, maxValue);
-			double y0 = Rand.UniformBetween(minValue, maxValue);
+			double x0 = gamma/delta * (1 - Rand.UniformBetween(-0.8, 0.8));
+			double y0 = alpha/beta * (1 - Rand.UniformBetween(-0.8, 0.8));
 			
 			return new double[] { alpha, beta, gamma, delta, x0, y0 };
 		}
