@@ -136,8 +136,11 @@ namespace user_interface
 				double[] inferedParams;
 				if (myWay)
 				{
+					Debug.WriteLine('1');
 					inferedParams = Model.FirstIntegralInfer(measurements);
+					Debug.WriteLine('2');
 					sde1 = new SDE(inferedParams[0], inferedParams[1], inferedParams[2], inferedParams[3], inferedParams[4]);
+					Debug.WriteLine('3');
 					textBlockrRes.Text += printParamsReport(sde0, sde1, myWay);
 					color = Brushes.Orange;
 				} else
@@ -149,8 +152,11 @@ namespace user_interface
 				}
 				try
 				{
+					Debug.WriteLine('4');
 					sde1.Rays(dt);
+					Debug.WriteLine('5');
 					var predictedSol = sde1.getSolution;
+					Debug.WriteLine('6');
 					plot.drawLine("Infered sol", predictedSol, color);
 				}
 				catch (Exception) { MessageBox.Show("Error occured during drawing"); }
