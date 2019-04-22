@@ -14,10 +14,10 @@ namespace collector
 	{
 		static readonly double dt = 0.01;
 
-		static void WriteToFile(bool myWay, string str)
+		static void WriteToFile(string str)
 		{
-			using (System.IO.StreamWriter file =
-			   new System.IO.StreamWriter(Directory.GetCurrentDirectory() + @"\..\..\..\..\" + (myWay ? "my" : "std") + "WayReport.txt", true))
+			using (StreamWriter file =
+			   new StreamWriter(Directory.GetCurrentDirectory() + @"\..\..\..\..\" + "Report.txt", true))
 			{
 				file.WriteLine(str);
 			}
@@ -71,6 +71,8 @@ namespace collector
 			double minValue = ReadInt("minValue");
 			double maxValue = ReadInt("maxValue");
 
+			string report;
+
 			for (int i = 0; i < experimentsNum; i++) {
 				double[] parameters = Generator.getRandomParams(minValue, maxValue);
 				SDE sde1, sde0 = new SDE(
@@ -82,6 +84,14 @@ namespace collector
 					parameters[5]
 				);
 
+				report =
+					parameters[0] + ";" +
+					parameters[1] + ";" +
+					parameters[2] + ";" +
+					parameters[3] + ";" +
+					parameters[4] + ";" +
+					parameters[5];
+
 				foreach (bool myWay in new bool[] { false, true })
 				{
 					if (myWay)
@@ -92,7 +102,6 @@ namespace collector
 						sde0.OSLO(dt);
 					}
 
-					string report = sde0.GetAverageSquaredError() + " ";
 
 					var exactSol = sde0.getSolution;
 					var measurements = Generator.getMeasurements(exactSol, stdDev, sampleSize);
@@ -128,18 +137,18 @@ namespace collector
 								Math.Pow(delta1 - delta0, 2)
 							) / 4);
 
-						report += sqerror + " ";
+						report += ";" + sqerror;
 						
 						sde1.Rays(dt);
 						var predictedSol = sde1.getSolution;
 					}
 					catch (Exception)
 					{
-						report += "failed";
+						report += ";failed";
 					}
-					
-					WriteToFile(myWay, report);
+
 				}
+				WriteToFile(report);
 
 			}
 

@@ -157,7 +157,7 @@ namespace user_interface
 				try
 				{
 					Debug.WriteLine('4');
-					sde1.Rays(dt);
+					if (myWay) sde1.Rays(dt); else sde1.OSLO(dt);
 					Debug.WriteLine('5');
 					var predictedSol = sde1.getSolution;
 					Debug.WriteLine('6');
