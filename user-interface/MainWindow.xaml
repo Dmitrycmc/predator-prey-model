@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Wpf.CartesianChart.PointShapeLine"
         mc:Ignorable="d"
-        Title="MainWindow" Height="775.4" Width="922.4">
+        Title="MainWindow" Height="823.4" Width="922.4">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -18,7 +18,8 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="28"/>
             <RowDefinition Height="45"/>
-            <RowDefinition/>
+            <RowDefinition Height="113*"/>
+            <RowDefinition Height="11*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -26,7 +27,7 @@
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
 
-        <controls:PointShapeLine x:Name="plot" Margin="10,10,12.6,10.6" Grid.RowSpan="11"/>
+        <controls:PointShapeLine x:Name="plot" Margin="10,10,12.6,11" Grid.RowSpan="12"/>
 
         <TextBlock Grid.Column="1" Margin="7.4,10,7,0" TextWrapping="Wrap" Text="Size of sample:" VerticalAlignment="Top" Height="23" Grid.RowSpan="2"/>
         <TextBox Grid.Column="2" Height="23" Margin="10,10,20,0" TextWrapping="Wrap" VerticalAlignment="Top" x:Name="textBoxN" Text="50" Grid.RowSpan="2"/>
@@ -55,9 +56,10 @@
         <Button Content="Get measurements" Margin="10,9.8,97,10" Grid.Column="2" Grid.Row="9" Click="GetMeasurements"/>
         <Button Content="Infer" Margin="118,9.8,20,10" Grid.Column="2" Grid.Row="9" Click="Infer"/>
 
-        <TextBlock x:Name="textBlockrRes" Grid.Column="1" Margin="7.4,10,20,21.6" Grid.Row="10" TextWrapping="Wrap" Grid.ColumnSpan="2" FontSize="16" FontFamily="Times New Roman"/>
+        <TextBlock x:Name="textBlockrRes" Grid.Column="1" Margin="7.4,10,20,10" Grid.Row="10" TextWrapping="Wrap" Grid.ColumnSpan="2" FontSize="16" FontFamily="Times New Roman"/>
         <CheckBox x:Name="checkBoxMyWay" Content="My way" Grid.Column="1" HorizontalAlignment="Left" Margin="6.4,5.8,0,0" Grid.Row="8" VerticalAlignment="Top" Height="18" Width="321" Grid.ColumnSpan="2"/>
         <Button Content="Gen params" Margin="0,9.8,10,10" Grid.Column="1" Grid.Row="9" Click="Generate" HorizontalAlignment="Right" Width="88"/>
         <Button Content="Clear" Margin="0,9.8,103,10" Grid.Column="1" Grid.Row="9" Click="Clear" HorizontalAlignment="Right" Width="80"/>
+        <Button x:Name="button" Content="Collector" Margin="10.4,10,10,10" Grid.Row="11" Click="Button_Click" Grid.Column="1"/>
     </Grid>
 </Window>

@@ -10,6 +10,7 @@ using Predictor;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace user_interface
 {
@@ -125,6 +126,13 @@ namespace user_interface
 		{
 			plot.Clear();
 			textBlockrRes.Text = "";
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			Process p = new Process();
+			p.StartInfo.FileName = Directory.GetCurrentDirectory() + @"\..\..\..\..\collector\bin\Debug\collector.exe";
+			p.Start();
 		}
 
 		private void Infer(object sender, RoutedEventArgs e)
