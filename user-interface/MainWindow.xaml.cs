@@ -112,7 +112,6 @@ namespace user_interface
 				) / 4);
 
 			res += "Squared error: " + sqerror;
-			MessageBox.Show("Squared error: " + sqerror);
 
 			return res + Environment.NewLine + Environment.NewLine;
 		}
@@ -140,11 +139,8 @@ namespace user_interface
 				double[] inferedParams;
 				if (myWay)
 				{
-					Debug.WriteLine('1');
 					inferedParams = Model.FirstIntegralInfer(measurements);
-					Debug.WriteLine('2');
 					sde1 = new SDE(inferedParams[0], inferedParams[1], inferedParams[2], inferedParams[3], inferedParams[4]);
-					Debug.WriteLine('3');
 					textBlockrRes.Text += printParamsReport(sde0, sde1, myWay);
 					color = Brushes.Orange;
 				} else
@@ -154,16 +150,10 @@ namespace user_interface
 					textBlockrRes.Text += printParamsReport(sde0, sde1, myWay);
 					color = Brushes.Blue;
 				}
-				try
-				{
-					Debug.WriteLine('4');
-					if (myWay) sde1.Rays(dt); else sde1.OSLO(dt);
-					Debug.WriteLine('5');
-					var predictedSol = sde1.getSolution;
-					Debug.WriteLine('6');
-					plot.drawLine("Infered sol", predictedSol, color);
-				}
-				catch (Exception) { MessageBox.Show("Error occured during drawing"); }
+				if (myWay) sde1.Rays(dt); else sde1.OSLO(dt);
+				var predictedSol = sde1.getSolution;
+				plot.drawLine("Infered sol", predictedSol, color);
+				
 				plot.drawPoints("Infered eq 1", sde1.GetEquilibriumPoint(), color);
 			}
 			catch (Exception)
