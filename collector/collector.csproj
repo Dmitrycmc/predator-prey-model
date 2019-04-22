@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="randomizer">
+      <HintPath>..\randomizer\bin\Debug\randomizer.dll</HintPath>
+    </Reference>
+    <Reference Include="solver">
+      <HintPath>..\solver\bin\Debug\solver.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
