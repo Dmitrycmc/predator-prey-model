@@ -115,7 +115,6 @@ namespace user_interface
 			MessageBox.Show("Squared error: " + sqerror);
 
 			return res + Environment.NewLine + Environment.NewLine;
-
 		}
 
 		private void Clear(object sender, RoutedEventArgs e)

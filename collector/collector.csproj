@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="predictor">
+      <HintPath>..\predictor\bin\Debug\predictor.dll</HintPath>
+    </Reference>
     <Reference Include="randomizer">
       <HintPath>..\randomizer\bin\Debug\randomizer.dll</HintPath>
     </Reference>
