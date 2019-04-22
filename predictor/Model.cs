@@ -15,18 +15,10 @@ namespace Predictor
 		static public double[] numericalMethodInfer(List<double[]> points, double strictAlpha = 0, bool visualize = false)
 		{
 			Variable<double> alpha = Variable.GaussianFromMeanAndVariance(5, 2).Named("alpha");
-			Variable<bool> alphaIsPoitive = alpha > 0;
-			alphaIsPoitive.ObservedValue = true;
 			Variable<double> beta = Variable.GaussianFromMeanAndVariance(5, 2).Named("beta");
-			Variable<bool> betaIsPoitive = alpha > 0;
-			betaIsPoitive.ObservedValue = true;
 			Variable<double> gamma = Variable.GaussianFromMeanAndVariance(5, 2).Named("gamma");
-			Variable<bool> gammaIsPoitive = alpha > 0;
-			gammaIsPoitive.ObservedValue = true;
 			Variable<double> delta = Variable.GaussianFromMeanAndVariance(5, 2).Named("delta");
-			Variable<bool> deltaIsPoitive = alpha > 0;
-			deltaIsPoitive.ObservedValue = true;
-
+			
 			Range dataRange = new Range(points.Count);
 			VariableArray<double> dxdt = Variable.Array<double>(dataRange);
 			VariableArray<double> dydt = Variable.Array<double>(dataRange);
@@ -103,17 +95,9 @@ namespace Predictor
 		static public double[] FirstIntegralInfer(List<double[]> points, double strictAlpha = 0, bool visualize = false)
 		{
 			Variable<double> alpha = Variable.GaussianFromMeanAndVariance(5, 2).Named("alpha");
-			Variable<bool> alphaIsPoitive = alpha > 0;
-			alphaIsPoitive.ObservedValue = true;
 			Variable<double> beta = Variable.GaussianFromMeanAndVariance(5, 2).Named("beta");
-			Variable<bool> betaIsPoitive = alpha > 0;
-			betaIsPoitive.ObservedValue = true;
 			Variable<double> gamma = Variable.GaussianFromMeanAndVariance(5, 2).Named("gamma");
-			Variable<bool> gammaIsPoitive = alpha > 0;
-			gammaIsPoitive.ObservedValue = true;
 			Variable<double> delta = Variable.GaussianFromMeanAndVariance(5, 2).Named("delta");
-			Variable<bool> deltaIsPoitive = alpha > 0;
-			deltaIsPoitive.ObservedValue = true;
 			Variable<double> C = Variable.GaussianFromMeanAndVariance(5, 5).Named("C");
 			Variable<double> sum = 0;
 
@@ -129,11 +113,11 @@ namespace Predictor
 			using (Variable.ForEach(dataRange))
 			{
 				sum +=
-					delta * x[dataRange]
+					(delta * x[dataRange]
 					+ beta * y[dataRange]
 					- gamma * Variable.Log(x[dataRange])
 					- alpha * Variable.Log(y[dataRange])
-					- C;
+					- C) / points.Count;
 			}
 
 			sum.ObservedValue = 0;
