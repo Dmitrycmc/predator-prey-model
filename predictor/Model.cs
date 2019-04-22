@@ -14,16 +14,16 @@ namespace Predictor
 
 		static public double[] numericalMethodInfer(List<double[]> points, double strictAlpha = 0, bool visualize = false)
 		{
-			Variable<double> alpha = Variable.GaussianFromMeanAndVariance(2, 1).Named("alpha");
+			Variable<double> alpha = Variable.GaussianFromMeanAndVariance(5, 2).Named("alpha");
 			Variable<bool> alphaIsPoitive = alpha > 0;
 			alphaIsPoitive.ObservedValue = true;
-			Variable<double> beta = Variable.GaussianFromMeanAndVariance(2, 1).Named("beta");
+			Variable<double> beta = Variable.GaussianFromMeanAndVariance(5, 2).Named("beta");
 			Variable<bool> betaIsPoitive = alpha > 0;
 			betaIsPoitive.ObservedValue = true;
-			Variable<double> gamma = Variable.GaussianFromMeanAndVariance(2, 1).Named("gamma");
+			Variable<double> gamma = Variable.GaussianFromMeanAndVariance(5, 2).Named("gamma");
 			Variable<bool> gammaIsPoitive = alpha > 0;
 			gammaIsPoitive.ObservedValue = true;
-			Variable<double> delta = Variable.GaussianFromMeanAndVariance(2, 1).Named("delta");
+			Variable<double> delta = Variable.GaussianFromMeanAndVariance(5, 2).Named("delta");
 			Variable<bool> deltaIsPoitive = alpha > 0;
 			deltaIsPoitive.ObservedValue = true;
 
@@ -102,19 +102,19 @@ namespace Predictor
 
 		static public double[] FirstIntegralInfer(List<double[]> points, double strictAlpha = 0, bool visualize = false)
 		{
-			Variable<double> alpha = Variable.GaussianFromMeanAndVariance(2, 1).Named("alpha");
+			Variable<double> alpha = Variable.GaussianFromMeanAndVariance(5, 2).Named("alpha");
 			Variable<bool> alphaIsPoitive = alpha > 0;
 			alphaIsPoitive.ObservedValue = true;
-			Variable<double> beta = Variable.GaussianFromMeanAndVariance(2, 1).Named("beta");
+			Variable<double> beta = Variable.GaussianFromMeanAndVariance(5, 2).Named("beta");
 			Variable<bool> betaIsPoitive = alpha > 0;
 			betaIsPoitive.ObservedValue = true;
-			Variable<double> gamma = Variable.GaussianFromMeanAndVariance(2, 1).Named("gamma");
+			Variable<double> gamma = Variable.GaussianFromMeanAndVariance(5, 2).Named("gamma");
 			Variable<bool> gammaIsPoitive = alpha > 0;
 			gammaIsPoitive.ObservedValue = true;
-			Variable<double> delta = Variable.GaussianFromMeanAndVariance(2, 1).Named("delta");
+			Variable<double> delta = Variable.GaussianFromMeanAndVariance(5, 2).Named("delta");
 			Variable<bool> deltaIsPoitive = alpha > 0;
 			deltaIsPoitive.ObservedValue = true;
-			Variable<double> C = Variable.GaussianFromMeanAndVariance(5, 10).Named("C");
+			Variable<double> C = Variable.GaussianFromMeanAndVariance(5, 5).Named("C");
 			Variable<double> sum = 0;
 
 			if (strictAlpha != 0)
