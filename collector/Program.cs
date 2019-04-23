@@ -75,6 +75,8 @@ namespace collector
 
 			for (int i = 0; i < experimentsNum; i++) {
 				double[] parameters = Generator.getRandomParams(minValue, maxValue);
+				report = sampleSize + ";";
+
 				SDE sde1, sde0 = new SDE(
 					parameters[0],
 					parameters[1],
@@ -84,7 +86,7 @@ namespace collector
 					parameters[5]
 				);
 
-				report =
+				report +=
 					parameters[0] + ";" +
 					parameters[1] + ";" +
 					parameters[2] + ";" +
@@ -138,9 +140,6 @@ namespace collector
 							) / 4);
 
 						report += ";" + sqerror;
-						
-						sde1.Rays(dt);
-						var predictedSol = sde1.getSolution;
 					}
 					catch (Exception)
 					{
