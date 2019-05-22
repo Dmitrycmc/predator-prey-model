@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using LiveCharts;
@@ -11,71 +12,40 @@ namespace Wpf.CartesianChart.HeatChart
 		public HeatSeriesExample()
 		{
 			InitializeComponent();
-			
-			Values = new ChartValues<HeatPoint>
-			{
-                //X means sales man
-                //Y is the day
- 
-                //"Jeremy Swanson"
-                new HeatPoint(0, 0, 1),
-				new HeatPoint(0, 1, 2),
- 
-                //"Lorena Hoffman"
-                new HeatPoint(1, 0, 4),
-				new HeatPoint(1, 1, 2),
- 
-                //"Robyn Williamson"
-                new HeatPoint(2, 0, 2),
-				new HeatPoint(2, 1, 3),
- 
-                //"Carole Haynes"
-                new HeatPoint(3, 0, 2),
-				new HeatPoint(3, 1, 7),
- 
-			};
 
-			Days = new[]
-			{
-				1, 2
-			};
+			List<string> alphaBetaList = new List<string>();
+			List<string> gammaDeltaList = new List<string>();
 
-			SalesMan = new[]
+			for (double a = 0.5; a <= 2.5; a += 0.5)
 			{
-				1, 2, 3, 4
-			};
+				for (double b = 0.5; b <= 2.5; b += 0.5)
+				{
+					alphaBetaList.Add(a + " " + b);
+					gammaDeltaList.Add(a + " " + b);
+				}
+			}
+
+			alphaBeta = alphaBetaList.ToArray();
+			gammaDelta = gammaDeltaList.ToArray();
 
 			DataContext = this;
 		}
 
 		public ChartValues<HeatPoint> Values { get; set; }
-		public int[] Days { get; set; }
-		public int[] SalesMan { get; set; }
+		public string[] alphaBeta { get; set; }
+		public string[] gammaDelta { get; set; }
 	
-		public void draw(int a)
+		public void draw(double[,] Values)
 		{
-			Values = new ChartValues<HeatPoint>
-			{
-                //X means sales man
-                //Y is the day
- 
-                //"Jeremy Swanson"
-                new HeatPoint(0, 0, a),
-				new HeatPoint(0, 1, a),
- 
-                //"Lorena Hoffman"
-                new HeatPoint(1, 0, 4),
-				new HeatPoint(1, 1, 2),
- 
-                //"Robyn Williamson"
-                new HeatPoint(2, 0, 2),
-				new HeatPoint(2, 1, 3),
- 
-                //"Carole Haynes"
-                new HeatPoint(3, 0, 2),
-				new HeatPoint(3, 1, 7),
+			this.Values = new ChartValues<HeatPoint>();
 
-			};
+			for (int i = 0; i < alphaBeta.Length; i++)
+			{
+				for (int j = 0; j < alphaBeta.Length; j++)
+				{
+					this.Values.Add(new HeatPoint(i, j, Values[i, j]));
+				}
+			}
 		}
 	}
 }
