@@ -122,12 +122,19 @@ namespace user_interface
 			textBlockrRes.Text = "";
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void collectorButton_click(object sender, RoutedEventArgs e)
 		{
 			Process p = new Process();
 			p.StartInfo.FileName = Directory.GetCurrentDirectory() + @"\..\..\..\..\collector\bin\Debug\collector.exe";
 			p.Start();
 			this.Close();
+		}
+
+		private void heatMapButton_click(object sender, RoutedEventArgs e)
+		{
+
+			HeatMapWindow subWindow = new HeatMapWindow();
+			subWindow.Show();
 		}
 
 		private void Infer(object sender, RoutedEventArgs e)
