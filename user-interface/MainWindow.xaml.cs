@@ -132,7 +132,6 @@ namespace user_interface
 
 		private void heatMapButton_click(object sender, RoutedEventArgs e)
 		{
-
 			HeatMapWindow subWindow = new HeatMapWindow();
 			subWindow.Show();
 		}
