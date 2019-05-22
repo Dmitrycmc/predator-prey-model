@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,29 @@ namespace user_interface
 		{
 			InitializeComponent();
 
-			heatMap.draw(100);
+			double[,] values = new double[25, 25];
+
+			string path = Directory.GetCurrentDirectory() + @"\..\..\..\..\" + @"\reports\HeatMap.txt";
+			try
+			{
+				using (StreamReader sr = new StreamReader(path))
+				{
+					for (int i = 0; i < 25; i++)
+					{
+						for (int j = 0; j < 25; j++)
+						{
+							double value = double.Parse(sr.ReadLine());
+							values[i, j] = value;
+						}
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("The process failed: {0}", e.ToString());
+			}
+
+			heatMap.draw(values);
 		}
 	}
 }

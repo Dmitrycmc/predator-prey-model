@@ -6,14 +6,14 @@ namespace Randomizer
 {
     static public class Generator
 	{
-		static public double[] getRandomParams(double minValue = 0.5, double maxValue = 5)
+		static public double[] getRandomParams(double minValue = 0.5, double maxValue = 2.5)
 		{
 			double alpha = Rand.UniformBetween(minValue, maxValue);
 			double beta = Rand.UniformBetween(minValue, maxValue);
 			double gamma = Rand.UniformBetween(minValue, maxValue);
 			double delta = Rand.UniformBetween(minValue, maxValue);
-			double x0 = gamma/delta * (1 - 0.5 * Rand.UniformBetween(-1, 1));
-			double y0 = alpha/beta * (1 - 0.5 * Rand.UniformBetween(-1, 1));
+			double x0 = gamma/delta * (1 + 0.5 * Rand.UniformBetween(-1, 1));
+			double y0 = alpha/beta * (1 + 0.5 * Rand.UniformBetween(-1, 1));
 			
 			return new double[] { alpha, beta, gamma, delta, x0, y0 };
 		}
