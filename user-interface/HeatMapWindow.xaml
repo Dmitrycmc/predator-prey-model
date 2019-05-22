@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="HeatMapWindow" Height="450" Width="800">
     <Grid>
-        <HeatChart:HeatSeriesExample x:Name="heatMap" HorizontalAlignment="Left" Height="285" VerticalAlignment="Top" Width="563" Margin="109,72,0,0"/>
+        <HeatChart:HeatSeriesExample x:Name="heatMap" Margin="10,10,9.6,10"/>
     </Grid>
 </Window>

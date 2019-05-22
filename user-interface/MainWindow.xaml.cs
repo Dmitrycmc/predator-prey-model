@@ -127,7 +127,6 @@ namespace user_interface
 			Process p = new Process();
 			p.StartInfo.FileName = Directory.GetCurrentDirectory() + @"\..\..\..\..\collector\bin\Debug\collector.exe";
 			p.Start();
-			this.Close();
 		}
 
 		private void heatMapButton_click(object sender, RoutedEventArgs e)
