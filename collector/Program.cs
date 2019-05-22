@@ -86,15 +86,15 @@ namespace collector
 							{
 
 								report = sampleSize + ";";
-								double[] parameters = Generator.getRandomParams();
+								double[] parameters = Generator.getRandomInitPoint(alpha, beta, gamma, delta);
 
 								SDE sde1, sde0 = new SDE(
 									alpha,
 									beta,
 									gamma,
 									delta,
-									parameters[4],
-									parameters[5]
+									parameters[0],
+									parameters[1]
 								);
 
 								report +=
@@ -102,8 +102,8 @@ namespace collector
 									beta + ";" +
 									gamma + ";" +
 									delta + ";" +
-									parameters[4] + ";" +
-									parameters[5];
+									parameters[0] + ";" +
+									parameters[1];
 
 								if (myWay)
 								{
@@ -113,11 +113,10 @@ namespace collector
 								{
 									sde0.OSLO(dt);
 								}
-
-
+								
 								var exactSol = sde0.getSolution;
 								var measurements = Generator.getMeasurements(exactSol, stdDev, sampleSize);
-
+								
 								try
 								{
 									double[] inferedParams;
@@ -166,7 +165,7 @@ namespace collector
 								median = results[medianIndex];
 							} else
 							{
-								median = 100000;
+								median = -1;
 							}
 							WriteToFile(median.ToString(), "HeatMap.txt");
 						}

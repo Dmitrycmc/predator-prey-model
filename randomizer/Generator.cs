@@ -12,10 +12,18 @@ namespace Randomizer
 			double beta = Rand.UniformBetween(minValue, maxValue);
 			double gamma = Rand.UniformBetween(minValue, maxValue);
 			double delta = Rand.UniformBetween(minValue, maxValue);
-			double x0 = gamma/delta * (1 + 0.5 * Rand.UniformBetween(-1, 1));
-			double y0 = alpha/beta * (1 + 0.5 * Rand.UniformBetween(-1, 1));
-			
+			double x0 = gamma / delta * (1 + 0.5 * Rand.UniformBetween(-1, 1));
+			double y0 = alpha / beta * (1 + 0.5 * Rand.UniformBetween(-1, 1));
+
 			return new double[] { alpha, beta, gamma, delta, x0, y0 };
+		}
+
+		static public double[] getRandomInitPoint(double alpha, double beta, double gamma, double delta)
+		{
+			double x0 = gamma / delta * (1 + 0.5 * Rand.UniformBetween(-1, 1));
+			double y0 = alpha / beta * (1 + 0.5 * Rand.UniformBetween(-1, 1));
+
+			return new double[] { x0, y0 };
 		}
 
 

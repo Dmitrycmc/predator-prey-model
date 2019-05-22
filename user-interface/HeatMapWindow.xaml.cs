@@ -35,7 +35,7 @@ namespace user_interface
 					{
 						for (int j = 0; j < 25; j++)
 						{
-							double value = double.Parse(sr.ReadLine());
+							double value = sr.Peek() > -1 ? double.Parse(sr.ReadLine()) : -1;
 							values[i, j] = value;
 						}
 					}

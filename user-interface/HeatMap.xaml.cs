@@ -43,7 +43,10 @@ namespace Wpf.CartesianChart.HeatChart
 			{
 				for (int j = 0; j < alphaBeta.Length; j++)
 				{
-					this.Values.Add(new HeatPoint(i, j, Values[i, j]));
+					if (Values[i, j] >= 0)
+					{
+						this.Values.Add(new HeatPoint(i, j, Values[i, j]));
+					} 
 				}
 			}
 		}
