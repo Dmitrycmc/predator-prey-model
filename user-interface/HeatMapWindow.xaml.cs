@@ -22,6 +22,8 @@ namespace user_interface
 		public HeatMapWindow()
 		{
 			InitializeComponent();
+
+			heatMap.draw(100);
 		}
 	}
 }
