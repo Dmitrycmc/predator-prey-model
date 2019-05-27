@@ -12,22 +12,8 @@ namespace Wpf.CartesianChart.HeatChart
 		public HeatSeriesExample()
 		{
 			InitializeComponent();
-
-			List<string> alphaBetaList = new List<string>();
-			List<string> gammaDeltaList = new List<string>();
-
-			for (double a = 0.5; a <= 2.5; a += 0.5)
-			{
-				for (double b = 0.5; b <= 2.5; b += 0.5)
-				{
-					alphaBetaList.Add(a + " " + b);
-					gammaDeltaList.Add(a + " " + b);
-				}
-			}
-
-			alphaBeta = alphaBetaList.ToArray();
-			gammaDelta = gammaDeltaList.ToArray();
-
+			
+			
 			DataContext = this;
 		}
 
@@ -49,6 +35,12 @@ namespace Wpf.CartesianChart.HeatChart
 					} 
 				}
 			}
+		}
+
+		public void labels(string[] alphaBetaList, string[] gammaDeltaList)
+		{
+			alphaBeta = alphaBetaList;
+			gammaDelta = gammaDeltaList;
 		}
 	}
 }

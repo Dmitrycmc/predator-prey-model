@@ -24,6 +24,24 @@ namespace user_interface
 		{
 			InitializeComponent();
 
+			List<Tuple<double, double>> alphaBeta = new List<Tuple<double, double>>();
+
+			for (double a = 0.5; a <= 2.5; a += 0.5)
+			{
+				for (double b = 0.5; b <= 2.5; b += 0.5)
+				{
+					alphaBeta.Add(new Tuple<double, double>(a, b));
+				}
+			}
+
+			alphaBeta.Sort((first, second) => {
+				double a = (first.Item1 / first.Item2);
+				double b = (second.Item1 / second.Item2);
+				if (a == b) return 0;
+				if (a > b) return 1;
+				return -1;
+			});
+
 			double[,] values = new double[25, 25];
 
 			string path = Directory.GetCurrentDirectory() + @"\..\..\..\..\" + @"\reports\HeatMap.txt";
@@ -31,12 +49,20 @@ namespace user_interface
 			{
 				using (StreamReader sr = new StreamReader(path))
 				{
-					for (int i = 0; i < 25; i++)
+					for (double alpha = 0.5; alpha <= 2.5; alpha += 0.5)
 					{
-						for (int j = 0; j < 25; j++)
+						for (double beta = 0.5; beta <= 2.5; beta += 0.5)
 						{
-							double value = sr.Peek() > -1 ? double.Parse(sr.ReadLine()) : -1;
-							values[i, j] = value;
+							for (double gamma = 0.5; gamma <= 2.5; gamma += 0.5)
+							{
+								for (double delta = 0.5; delta <= 2.5; delta += 0.5)
+								{
+									double value = sr.Peek() > -1 ? double.Parse(sr.ReadLine()) : -1;
+									int ind1 = alphaBeta.FindIndex(pair => pair.Item1 == alpha && pair.Item2 == beta);
+									int ind2 = alphaBeta.FindIndex(pair => pair.Item1 == gamma && pair.Item2 == delta);
+									values[ind1, ind2] = value;
+								}
+							}
 						}
 					}
 				}
@@ -45,7 +71,10 @@ namespace user_interface
 			{
 				Console.WriteLine("The process failed: {0}", e.ToString());
 			}
-
+			
+			string[] alphaBetaLabels = alphaBeta.Select(pair => pair.Item1 + " " + pair.Item2).ToArray();
+			
+			heatMap.labels(alphaBetaLabels, alphaBetaLabels);
 			heatMap.draw(values);
 		}
 	}
