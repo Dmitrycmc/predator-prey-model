@@ -73,6 +73,10 @@ namespace collector
 			
 			string report;
 
+			int total = 5 * 5 * 5 * 5 * experimentsNum;
+			int cnt = 0;
+			DateTime t0 = DateTime.Now;
+
 			for (double alpha = 0.5; alpha <= 2.5; alpha += 0.5)
 			{
 				for (double beta = 0.5; beta <= 2.5; beta += 0.5)
@@ -157,6 +161,17 @@ namespace collector
 									report += ";failed";
 								}
 								WriteToFile(report, "Report.csv");
+								cnt++;
+								Console.Clear();
+								Console.WriteLine(Math.Round(((double)cnt / total * 100), 2) + "%");
+								DateTime t1 = DateTime.Now;
+								int fullSeconds = (int)(t1.Subtract(t0).TotalMilliseconds / cnt * (total - cnt) / 1000);
+								int fullMinutes = fullSeconds / 60;
+								int seconds = fullSeconds % 60;
+								int hours = fullMinutes / 60;
+								int minutes = fullMinutes % 60;
+								Console.WriteLine((hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
+
 							}
 							results.Sort();
 							double median;

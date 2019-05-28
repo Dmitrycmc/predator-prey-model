@@ -60,7 +60,7 @@
         <CheckBox x:Name="checkBoxMyWay" Content="My way" Grid.Column="1" HorizontalAlignment="Left" Margin="6.4,5.8,0,0" Grid.Row="8" VerticalAlignment="Top" Height="18" Width="321" Grid.ColumnSpan="2"/>
         <Button Content="Gen params" Margin="0,9.8,10,10" Grid.Column="1" Grid.Row="9" Click="Generate" HorizontalAlignment="Right" Width="88"/>
         <Button Content="Clear" Margin="0,9.8,103,10" Grid.Column="1" Grid.Row="9" Click="Clear" HorizontalAlignment="Right" Width="80"/>
-        <Button x:Name="collectorButton" Content="Collector" Margin="10.4,10,10,10" Grid.Row="11" Click="collectorButton_click" Grid.Column="1"/>
-        <Button x:Name="heatMapButton" Content="Show heat maps" Margin="10,8.6,20,10.8" Grid.Row="11" Click="heatMapButton_click" Grid.Column="2"/>
+        <Button x:Name="collectorButton" Content="Collector" Margin="10,10,10,10" Grid.Row="11" Click="collectorButton_click" Grid.Column="1"/>
+        <Button x:Name="heatMapButton" Content="Show heat maps" Margin="10,10,10,10" Grid.Row="11" Click="heatMapButton_click" Grid.Column="2"/>
     </Grid>
 </Window>
